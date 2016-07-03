@@ -1,6 +1,15 @@
 # Footprint
 Debug logger for Android
 
+Usage
+-----
+
+ You just write,
+ Footprint.leave();
+
+ Want to know more information, you can see
+ [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/ExampleActivity.java)
+
 License
 -------
 
