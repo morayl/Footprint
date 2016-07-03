@@ -4,11 +4,24 @@ Debug logger for Android
 Usage
 -----
 
- You just write,
- Footprint.leave();
+ You just write, `Footprint.leave();`
 
- Want to know more information, you can see
+ Please see examples
  [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/ExampleActivity.java)
+
+Download
+--------
+
+```groovy
+repositories {
+    maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
+}
+dependencies {
+    debugCompile 'com.morayl:footprint:1.0.0'
+}
+```
+This function is a little bit slow, because using `stack trace`.
+So I recommend you to use only `debugCompile`
 
 License
 -------
