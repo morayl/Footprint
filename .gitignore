@@ -5,3 +5,5 @@
 /build
 /captures
 *.iml
+/app/app.iml
+/footprint/footprint.iml
