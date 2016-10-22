@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.google.code.gson:gson:2.7'
 }
 
 def repo = new File(rootDir, "repository")
