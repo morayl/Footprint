@@ -107,6 +107,7 @@ public class Footprint {
      * ・キー：バリュー
      * ・キー：バリュー
      * とログ出力されます
+     * 1セットの場合は1行、2セット以上の場合は改行が入ります
      *
      * @param keyValueKeyValue String,Object,String,Object...
      */
@@ -114,11 +115,13 @@ public class Footprint {
         if (isNullLeaveNull(keyValueKeyValue)) {
             return;
         }
+
         StringBuilder sb = new StringBuilder();
+        final String keyPrefix = keyValueKeyValue.length < 3 ? "・" : "\n ・";
         for (int i = 0; i < keyValueKeyValue.length; i++) {
             final String message = getStringValue(keyValueKeyValue[i]);
             if (i % 2 == 0) {
-                sb.append("\n ・");
+                sb.append(keyPrefix);
                 sb.append(message);
                 sb.append(" : ");
             } else {
