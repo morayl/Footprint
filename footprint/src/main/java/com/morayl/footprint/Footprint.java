@@ -1,5 +1,6 @@
 package com.morayl.footprint;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -221,6 +222,17 @@ public class Footprint {
                 }
             }, leftDurationMillis > 1500 ? 1500 : leftDurationMillis);
         }
+    }
+
+    /**
+     * ダイアログにメッセージを表示
+     * 巨大なデータクラスなど、ログに出すと表示しきれないものなどを確認したいときに
+     *
+     * @param context {@link Context}
+     * @param message メッセージ(jsonに変換されます)
+     */
+    public static void dialog(final Context context, final Object message) {
+        new AlertDialog.Builder(context).setMessage(getFormattedJSON(message, DEFAULT_INDENT)).create().show();
     }
 
     /**
