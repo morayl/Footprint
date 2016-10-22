@@ -28,6 +28,7 @@ import java.lang.reflect.Field;
  * データクラスの全値を見やすく出したいですよね。{@link #json(Object)}
  * トーストのLength指定が毎度めんどい、.show()を忘れるとかありますよね。{@link #toast(Context, String)}
  * トーストすぐ消えちゃってデバッグにならないことありますよね。{@link #toast(Context, String, int)}
+ * logcatに表示しきれない長いjsonデータを表示したいことありますよね。{@link #dialog(Context, Object)}
  *
  * メソッドの頭文字はなるべくホームポジションから動かなくていいものにしています
  * (s,f,t,j,k,l)
