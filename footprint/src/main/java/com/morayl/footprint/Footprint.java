@@ -42,7 +42,9 @@ public class Footprint {
     private static final int DEFAULT_INDENT = 4;
 
     /** タグ */
-    private static String LOG_TAG = DEFAULT_TAG;
+    private static String sLogTag = DEFAULT_TAG;
+    /** 有効無効 */
+    private static boolean sEnable = true;
 
     /**
      * タグを変更する
@@ -51,7 +53,17 @@ public class Footprint {
      * @param logTag タグ名
      */
     public static void setLogTag(final String logTag) {
-        LOG_TAG = getStringValue(logTag);
+        sLogTag = getStringValue(logTag);
+    }
+
+    /**
+     * 有効無効をセットする
+     * 無効にすると、全てのpublicメソッドで何も処理されなくなります
+     *
+     * @param enable true:有効
+     */
+    public static void setEnable(final boolean enable) {
+        sEnable = enable;
     }
 
     /**
@@ -61,6 +73,8 @@ public class Footprint {
      * @param message メッセージ
      */
     public static void leave(final Object message) {
+        if (!sEnable)
+            return;
         simple(getMetaInfo(), getStringValue(message));
     }
 
@@ -70,6 +84,8 @@ public class Footprint {
      * @see #leave(Object)
      */
     public static void leave() {
+        if (!sEnable)
+            return;
         leave("");
     }
 
@@ -82,6 +98,8 @@ public class Footprint {
      * @see #leave(Object)
      */
     public static void leave(final Object... messages) {
+        if (!sEnable)
+            return;
         leave(unionObjectsString(messages));
     }
 
@@ -91,7 +109,9 @@ public class Footprint {
      * @param message メッセージ
      */
     public static void simple(final Object message) {
-        Log.d(LOG_TAG, getStringValue(message));
+        if (!sEnable)
+            return;
+        Log.d(sLogTag, getStringValue(message));
     }
 
     /**
@@ -100,6 +120,8 @@ public class Footprint {
      * @param messages メッセージ
      */
     public static void simple(final Object... messages) {
+        if (!sEnable)
+            return;
         simple(unionObjectsString(messages));
     }
 
@@ -114,6 +136,8 @@ public class Footprint {
      * @param keyValueKeyValue String,Object,String,Object...
      */
     public static void keyAndValues(final Object... keyValueKeyValue) {
+        if (!sEnable)
+            return;
         if (isNullLeaveNull(keyValueKeyValue)) {
             return;
         }
@@ -141,6 +165,8 @@ public class Footprint {
      * @param data データ
      */
     public static void json(Object data) {
+        if (!sEnable)
+            return;
         json(data, DEFAULT_INDENT);
     }
 
@@ -152,6 +178,8 @@ public class Footprint {
      * @see #json(Object)
      */
     public static void json(Object data, final int indent) {
+        if (!sEnable)
+            return;
         leave("\n", getFormattedJSON(data, indent));
     }
 
@@ -161,6 +189,8 @@ public class Footprint {
      * @param object 対象
      */
     public static void fields(Object object) {
+        if (!sEnable)
+            return;
         if (isNullLeaveNull(object)) {
             return;
         }
@@ -183,6 +213,8 @@ public class Footprint {
      * @param t 対象
      */
     public static void stackTrace(final Throwable t) {
+        if (!sEnable)
+            return;
         leave(Log.getStackTraceString(t));
     }
 
@@ -191,6 +223,8 @@ public class Footprint {
      * メソッドの呼び出し階層を確認したいときなどに
      */
     public static void stackTrace() {
+        if (!sEnable)
+            return;
         stackTrace(new Throwable());
     }
 
@@ -201,6 +235,8 @@ public class Footprint {
      * @param message メッセージ
      */
     public static void toast(Context context, String message) {
+        if (!sEnable)
+            return;
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -212,6 +248,8 @@ public class Footprint {
      * @param durationMillis 表示時間[ms](大体です)
      */
     public static void toast(final Context context, final String message, final int durationMillis) {
+        if (!sEnable)
+            return;
         toast(context, message);
         if (durationMillis > 1500) {
             // 残り時間
@@ -233,6 +271,8 @@ public class Footprint {
      * @param message メッセージ(jsonに変換されます)
      */
     public static void dialog(final Context context, final Object message) {
+        if (!sEnable)
+            return;
         new AlertDialog.Builder(context).setMessage(getFormattedJSON(message, DEFAULT_INDENT)).create().show();
     }
 

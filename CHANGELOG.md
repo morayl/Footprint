@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2.0 *(2016-10-23)*
+----------------------------
+
+ * NEW: `setEnable` method can change all public log method enable.
+
+
 Version 1.1.0 *(2016-10-22)*
 ----------------------------
 

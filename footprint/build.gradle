@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.2.0"
     }
     buildTypes {
         release {
@@ -30,7 +30,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.1.0'
+            pom.version = '1.2.0'
             pom.groupId = 'com.morayl'
             pom.artifactId = 'footprint'
         }
