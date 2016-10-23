@@ -17,7 +17,7 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugCompile 'com.morayl:footprint:1.0.0'
+    debugCompile 'com.morayl:footprint:1.2.0'
 }
 ```
 This function is a little bit slow, because using `stack trace`.
