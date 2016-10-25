@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2.1 *(2016-10-25)*
+----------------------------
+
+ * modify `AndroidManifest.xml`. Delete <application> definition.
+
+
 Version 1.2.0 *(2016-10-23)*
 ----------------------------
 

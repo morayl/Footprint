@@ -17,11 +17,16 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugCompile 'com.morayl:footprint:1.2.0'
+    debugCompile 'com.morayl:footprint:1.2.1'
 }
 ```
 This function is a little bit slow, because using `stack trace`.
 So I recommend you to use only `debugCompile`
+
+ChangeLog
+--------
+
+ See [ChangeLog](./CHANGELOG.md)
 
 License
 -------
