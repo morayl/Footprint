@@ -338,7 +338,7 @@ public class Footprint {
         } catch (Throwable t) {
             stackTrace(t);
         }
-        return "error";
+        return String.valueOf(object);
     }
 
     /**
