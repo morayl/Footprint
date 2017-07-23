@@ -52,7 +52,7 @@ public class Footprint {
      *
      * @param logTag タグ名
      */
-    public static void setLogTag(final String logTag) {
+    public static void setLogTag(String logTag) {
         sLogTag = getStringValue(logTag);
     }
 
@@ -62,7 +62,7 @@ public class Footprint {
      *
      * @param enable true:有効
      */
-    public static void setEnable(final boolean enable) {
+    public static void setEnable(boolean enable) {
         sEnable = enable;
     }
 
@@ -72,7 +72,7 @@ public class Footprint {
      *
      * @param message メッセージ
      */
-    public static void leave(final Object message) {
+    public static void leave(Object message) {
         if (!sEnable)
             return;
         simple(getMetaInfo(), getStringValue(message));
@@ -97,7 +97,7 @@ public class Footprint {
      * @param messages メッセージ
      * @see #leave(Object)
      */
-    public static void leave(final Object... messages) {
+    public static void leave(Object... messages) {
         if (!sEnable)
             return;
         leave(unionObjectsString(messages));
@@ -108,7 +108,7 @@ public class Footprint {
      *
      * @param message メッセージ
      */
-    public static void simple(final Object message) {
+    public static void simple(Object message) {
         if (!sEnable)
             return;
         Log.d(sLogTag, getStringValue(message));
@@ -119,7 +119,7 @@ public class Footprint {
      *
      * @param messages メッセージ
      */
-    public static void simple(final Object... messages) {
+    public static void simple(Object... messages) {
         if (!sEnable)
             return;
         simple(unionObjectsString(messages));
@@ -135,7 +135,7 @@ public class Footprint {
      *
      * @param keyValueKeyValue String,Object,String,Object...
      */
-    public static void keyAndValues(final Object... keyValueKeyValue) {
+    public static void keyAndValues(Object... keyValueKeyValue) {
         if (!sEnable)
             return;
         if (isNullLeaveNull(keyValueKeyValue)) {
@@ -177,7 +177,7 @@ public class Footprint {
      * @param indent インデントの幅
      * @see #json(Object)
      */
-    public static void json(Object data, final int indent) {
+    public static void json(Object data, int indent) {
         if (!sEnable)
             return;
         leave("\n", getFormattedJSON(data, indent));
@@ -212,7 +212,7 @@ public class Footprint {
      *
      * @param t 対象
      */
-    public static void stackTrace(final Throwable t) {
+    public static void stackTrace(Throwable t) {
         if (!sEnable)
             return;
         leave(Log.getStackTraceString(t));
@@ -270,7 +270,7 @@ public class Footprint {
      * @param context {@link Context}
      * @param message メッセージ(jsonに変換されます)
      */
-    public static void dialog(final Context context, final Object message) {
+    public static void dialog(Context context, Object message) {
         if (!sEnable)
             return;
         new AlertDialog.Builder(context).setMessage(getFormattedJSON(message, DEFAULT_INDENT)).create().show();
@@ -325,9 +325,9 @@ public class Footprint {
      * @param indent インデント
      * @return json文字列
      */
-    private static String getFormattedJSON(Object object, final int indent) {
+    private static String getFormattedJSON(Object object, int indent) {
         try {
-            final String json = new Gson().toJson(object);
+            String json = new Gson().toJson(object);
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 return jsonObject.toString(indent);
@@ -347,14 +347,13 @@ public class Footprint {
      * @param objects {@link Object}
      * @return スペースで連結された文字列
      */
-    private static String unionObjectsString(final Object... objects) {
+    private static String unionObjectsString(Object... objects) {
         if (objects == null) {
             return "null";
         }
         StringBuilder sb = new StringBuilder();
         for (Object object : objects) {
             sb.append(getStringValue(object)).append(" ");
-
         }
         return sb.deleteCharAt(sb.length() - 1).toString();
     }
@@ -365,7 +364,7 @@ public class Footprint {
      * @param object 対象
      * @return nullならtrue
      */
-    private static boolean isNullLeaveNull(final Object object) {
+    private static boolean isNullLeaveNull(Object object) {
         if (object == null) {
             leave("null");
             return true;
