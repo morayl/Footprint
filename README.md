@@ -4,7 +4,7 @@ Debug logger for Android
 Usage
 -----
 
- You just write, `Footprint.leave();` logcat show [Class#Method:LineNumber]
+ You just write, `Footprint.leave();` logcat show `[ClassName#MethodName:LineNumber]`
 
  Please see examples
  [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/ExampleActivity.java)
