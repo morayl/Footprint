@@ -22,15 +22,15 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_sample);
 
         // You just put this.
-        Footprint.leave();// [ExampleActivity#onCreate:26]
+        Footprint.leave();// [ExampleActivity#onCreate:25]
 
         // a param
         Footprint.leave("You can leave message.");
-        // [ExampleActivity#onCreate:30] You can leave message.
+        // [ExampleActivity#onCreate:29] You can leave message.
 
         // params
         Footprint.leave("You can leave multiple params like", this.getClass(), 5, false, "test");
-        // [ExampleActivity#onCreate:34] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
+        // [ExampleActivity#onCreate:33] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
 
         // Just show log. It's faster than leave because it's not use stackTrace.
         Footprint.simple("simple");
@@ -80,7 +80,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        Footprint.leave();// [ExampleActivity#onClick:68]
+        Footprint.leave();// [ExampleActivity#onClick:83]
 
         // StackTrace
         try {
@@ -88,7 +88,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
             str.length();
         } catch (NullPointerException e) {
             Footprint.stackTrace(e);
-            /**
+            /*
              [ExampleActivity#onClick:75] java.lang.NullPointerException
              at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:73)
              at android.view.View.performClick(View.java:4307)
@@ -103,7 +103,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
         // You can also use with no params. You can see callers.
         Footprint.stackTrace();
-        /**
+        /*
          [ExampleActivity#onClick:90] java.lang.Throwable
          at com.morayl.footprint.Footprint.stackTrace(Footprint.java:253)
          at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:90)
@@ -120,7 +120,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
         // leave json
         Footprint.json(dataClass);
-        /**
+        /*
          [ExampleActivity#onClick:107]
           {
             "value3": 5,
@@ -132,7 +132,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
         // leave json with set indent
         Footprint.json(dataClass, 8);
-        /**
+        /*
          [ExampleActivity#onClick:119]
           {
                 "value3": 5,
@@ -146,7 +146,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         boolean wasCorrect = false;
         // key and value
         Footprint.keyAndValues("isCorrect", isCorrect, "wasCorrect", wasCorrect);
-        /**
+        /*
          [ExampleActivity#onClick:133]
           ・isCorrect : true
           ・wasCorrect : false
@@ -154,7 +154,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
         // fields
         Footprint.fields(this);
-        /**
+        /*
          [ExampleActivity#onClick:141]
           {
             "nameValuePairs": {
