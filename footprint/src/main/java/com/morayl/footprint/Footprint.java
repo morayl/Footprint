@@ -1,7 +1,11 @@
 package com.morayl.footprint;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,6 +17,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * 足跡を、残す。
@@ -100,7 +108,7 @@ public class Footprint {
     public static void leave(Object... messages) {
         if (!sEnable)
             return;
-        leave(unionObjectsString(messages));
+        leave(joinObjectsString(messages));
     }
 
     /**
@@ -122,7 +130,7 @@ public class Footprint {
     public static void simple(Object... messages) {
         if (!sEnable)
             return;
-        simple(unionObjectsString(messages));
+        simple(joinObjectsString(messages));
     }
 
     /**
@@ -277,6 +285,59 @@ public class Footprint {
     }
 
     /**
+     * 通知を表示
+     * クラス名、メソッド名、行数
+     *
+     * @param context 　{@link Context}
+     */
+    public static void notify(Context context) {
+        if (!sEnable)
+            return;
+        notify(context, "");
+    }
+
+    /**
+     * 通知を表示
+     * メッセージ、クラス名、メソッド名、行数
+     * BigTextStyleなので、多少長くても通知を広げれば参照できます
+     *
+     * @param context {@link Context}
+     * @param messages メッセージ
+     */
+    @SuppressLint("NewApi")
+    public static void notify(Context context, Object... messages) {
+        if (!sEnable)
+            return;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            toast(context, "Footprint\nnotify is available os or later android 16", 3000);
+            return;
+        }
+        String joinedMessage = joinObjectsString(messages);
+        String date = new SimpleDateFormat("[HH:mm:ss.Sss] M/d(E)", Locale.getDefault()).format(new Date());
+        Notification notification = new Notification.Builder(context)
+                                            .setContentTitle(date)
+                                            .setSmallIcon(android.R.drawable.ic_menu_info_details)
+                                            .setContentText(joinedMessage != null ? joinedMessage + getMetaInfo() : getMetaInfo())
+                                            .setStyle(new Notification.BigTextStyle().bigText(getMetaInfo() + "\n" + joinObjectsString(messages))
+                                                              .setSummaryText("Footprint")
+                                                              .setBigContentTitle(date))
+                                            .setPriority(Notification.PRIORITY_MAX)
+                                            .build();
+        notify(context, notification, new Random().nextInt());
+    }
+
+    /**
+     * 通知を表示
+     *
+     * @param context {@link Context}
+     * @param notification 通知
+     * @param id notificationId
+     */
+    private static void notify(Context context, Notification notification, int id) {
+        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(id, notification);
+    }
+
+    /**
      * Objectを文字列に変換
      *
      * @param object 変換対象
@@ -347,9 +408,9 @@ public class Footprint {
      * @param objects {@link Object}
      * @return スペースで連結された文字列
      */
-    private static String unionObjectsString(Object... objects) {
-        if (objects == null) {
-            return "null";
+    private static String joinObjectsString(Object... objects) {
+        if (objects == null || objects.length == 0) {
+            return null;
         }
         StringBuilder sb = new StringBuilder();
         for (Object object : objects) {

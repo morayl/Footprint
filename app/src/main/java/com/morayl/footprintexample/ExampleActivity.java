@@ -61,6 +61,21 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        findViewById(R.id.dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // You can show long message or object(convert to json in method) in dialog
+                Footprint.dialog(ExampleActivity.this, getString(R.string.long_message));
+            }
+        });
+
+        findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // You can show notification and can show long message in BigPictureStyle
+                Footprint.notify(ExampleActivity.this, getString(R.string.long_message));
+            }
+        });
     }
 
     @Override
