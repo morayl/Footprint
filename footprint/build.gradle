@@ -27,7 +27,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '1.2.1'
+            pom.version = '1.3.0'
             pom.groupId = 'com.morayl'
             pom.artifactId = 'footprint'
         }
