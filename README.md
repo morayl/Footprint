@@ -4,7 +4,7 @@ Debug logger for Android
 Usage
 -----
 
- You just write, `Footprint.leave();`
+ You just write, `Footprint.leave();` logcat show [Class#Method:LineNumber]
 
  Please see examples
  [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/ExampleActivity.java)
@@ -17,7 +17,7 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugCompile 'com.morayl:footprint:1.2.1'
+    debugCompile 'com.morayl:footprint:1.3.0'
 }
 ```
 This function is a little bit slow, because using `stack trace`.

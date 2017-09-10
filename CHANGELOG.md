@@ -5,7 +5,7 @@ Version 1.3.0 *(2017-09-10)*
 ----------------------------
 
  * FIX: `dialog` method can't show String or primitive value.
- * NEW: `notify` method can show notification with time, line and messages. This method available Android Os 16 or later.
+ * NEW: `notify` method can show notification with time, line and messages. This method available Android OS 16 or later.
 
 
 Version 1.2.1 *(2016-10-25)*

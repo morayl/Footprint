@@ -37,6 +37,7 @@ import java.util.Random;
  * トーストのLength指定が毎度めんどい、.show()を忘れるとかありますよね。{@link #toast(Context, String)}
  * トーストすぐ消えちゃってデバッグにならないことありますよね。{@link #toast(Context, String, int)}
  * logcatに表示しきれない長いjsonデータを表示したいことありますよね。{@link #dialog(Context, Object)}
+ * アプリを見ていないときでも画面にログを吐きたいことありますよね。{@link #notify(Context)}
  *
  * メソッドの頭文字はなるべくホームポジションから動かなくていいものにしています
  * (s,f,t,j,k,l)
