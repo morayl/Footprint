@@ -21,7 +21,7 @@ dependencies {
 }
 ```
 This function is a little bit slow, because using `stack trace`.
-So I recommend you to use only `debugCompile`
+So I recommend you to use only `debugImplementation`
 
 ChangeLog
 --------
