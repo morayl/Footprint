@@ -1,10 +1,11 @@
 package com.morayl.footprintexample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.morayl.footprint.Footprint;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * You can see examples. (Default LogTag is "Footprint")
@@ -15,7 +16,6 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
     public boolean field2 = true;
     public DataClass field3 = new DataClass("fuga", "hoge", 100, false);
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
