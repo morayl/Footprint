@@ -1,1 +1,2 @@
+include ':footprint-ktx'
 include ':app', ':footprint'
