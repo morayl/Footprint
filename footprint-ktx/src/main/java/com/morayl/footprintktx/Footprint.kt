@@ -8,24 +8,43 @@ import org.json.JSONObject
 
 internal const val DEFAULT_TAG = "Footprint"
 
-fun leave() {
-    leaveSimple(getMetaInfo())
+private var enableInternal = true
+private var showJsonExceptionInternal = false
+private var forceSimpleInternal = false
+
+fun footprintConfig(
+        enable: Boolean = enableInternal,
+        showJsonException: Boolean = showJsonExceptionInternal,
+        forceSimple: Boolean = forceSimpleInternal
+) {
+    enableInternal = enable
+    showJsonExceptionInternal = showJsonException
+    forceSimpleInternal = forceSimple
 }
 
-fun leave(vararg messages: Any?) {
-    leaveSimple(getMetaInfo(), messages.joinToString(separator = " "))
+fun footprint() {
+    footprintSimple(getMetaInfo())
 }
 
-fun leaveSimple(vararg messages: Any?) {
-    leaveSimple(messages.joinToString(separator = " "))
+fun footprint(vararg messages: Any?) {
+    footprintSimple(getMetaInfo(), messages.joinToString(separator = " "))
 }
 
-fun leaveSimple(message: Any?) {
+fun footprintSimple(vararg messages: Any?) {
+    footprintSimple(messages.joinToString(separator = " "))
+}
+
+fun footprintSimple(message: Any?) {
     Log.d(DEFAULT_TAG, message.toString())
 }
 
-fun <T> T.leaveJson(): T {
-    leave("\n", toFormattedJSON())
+fun <T> T.withFootprintJson(): T {
+    footprint("\n", toFormattedJSON())
+    return this
+}
+
+fun <T> T.withFootprint(): T {
+    footprint(this)
     return this
 }
 
@@ -36,28 +55,31 @@ fun <T> T.leaveJson(): T {
  * @return json文字列
  */
 private fun Any?.toFormattedJSON(indent: Int = 2): String? {
-    try {
+    return runCatching {
         val json = Gson().toJson(this)
-        return try {
+        try {
             val jsonObject = JSONObject(json)
             jsonObject.toString(indent)
         } catch (e: JSONException) {
             val jsonArray = JSONArray(json)
             jsonArray.toString(indent)
         }
-    } catch (t: Throwable) {
-        t.leaveStackTrace()
+    }.onFailure {
+        if (showJsonExceptionInternal) {
+            it.footprintStackTrace()
+        }
+    }.getOrElse {
+        toString()
     }
-    return toString()
 }
 
 
-fun Throwable.leaveStackTrace() {
-    leave(Log.getStackTraceString(this))
+fun Throwable.footprintStackTrace() {
+    footprint(Log.getStackTraceString(this))
 }
 
-fun leaveStacktrace() {
-    Throwable().leaveStackTrace()
+fun footprintStackTrace() {
+    Throwable().footprintStackTrace()
 }
 
 /**
