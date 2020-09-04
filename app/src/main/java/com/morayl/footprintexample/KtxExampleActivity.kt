@@ -33,11 +33,11 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         // [ExampleActivity#onCreate:33] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
 
         // Just show log. It's faster than leave because it's not use stackTrace.
-        footprintSimple("simple")
+        simpleFootprint("simple")
         // simple
 
         // params
-        footprintSimple("simple", "multiple", "params", 1, true)
+        simpleFootprint("simple", "multiple", "params", 1, true)
         // simple multiple params 1 true
         val button = findViewById<View>(R.id.button)
         button?.setOnClickListener(this)
@@ -52,7 +52,7 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
             str!!.length
         } catch (e: NullPointerException) {
             e.printStackTrace()
-            e.footprintStackTrace()
+            e.stacktraceFootprint()
             /*
              [ExampleActivity#onClick:75] java.lang.NullPointerException
              at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:73)
@@ -67,7 +67,7 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         // You can also use with no params. You can see callers.
-        footprintStackTrace()
+        stacktraceFootprint()
         /*
          [ExampleActivity#onClick:90] java.lang.Throwable
          at com.morayl.footprint.Footprint.stackTrace(Footprint.java:253)
@@ -83,7 +83,7 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         val dataClass = DataClass("test", "test2", 5, true)
 
         // leave json
-        dataClass.withFootprintJson()
+        dataClass.withJsonFootprint()
         /*
          [ExampleActivity#onClick:107]
           {

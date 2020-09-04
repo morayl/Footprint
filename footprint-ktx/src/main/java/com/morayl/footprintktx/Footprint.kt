@@ -31,29 +31,29 @@ fun configFootprint(
 
 fun footprint(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
-        footprintSimple(getMetaInfo(), priority = priority, logTag = logTag)
+        simpleFootprint(getMetaInfo(), priority = priority, logTag = logTag)
     }
 }
 
 fun footprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
-        footprintSimple(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
+        simpleFootprint(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
 }
 
-fun footprintSimple(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
+fun simpleFootprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
-        footprintSimple(messages.joinToString(separator = " "), priority = priority, logTag = logTag)
+        simpleFootprint(messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
 }
 
-fun footprintSimple(message: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
+fun simpleFootprint(message: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         Log.println(priority.value, logTag, message.toString())
     }
 }
 
-fun <T> T.withFootprintJson(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal): T {
+fun <T> T.withJsonFootprint(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal): T {
     if (enableInternal) {
         footprint("\n", toFormattedJSON(), priority = priority, logTag = logTag)
     }
@@ -67,15 +67,15 @@ fun <T> T.withFootprint(priority: LogPriority = logLevelInternal, logTag: String
     return this
 }
 
-fun Throwable.footprintStackTrace(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
+fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
     }
 }
 
-fun footprintStackTrace(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
+fun stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
-        Throwable().footprintStackTrace(priority = priority, logTag = logTag)
+        Throwable().stacktraceFootprint(priority = priority, logTag = logTag)
     }
 }
 
@@ -97,7 +97,7 @@ private fun Any?.toFormattedJSON(indent: Int = 2): String? {
         }
     }.onFailure {
         if (showJsonExceptionInternal) {
-            it.footprintStackTrace()
+            it.stacktraceFootprint()
         }
     }.getOrElse {
         toString()
