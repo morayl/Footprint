@@ -24,8 +24,9 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         "aa".withFootprint()
 
         // a param
-        footprint("You can leave message.")
+        footprint("You can leave message.", priority = LogPriority.ERROR)
         // [ExampleActivity#onCreate:29] You can leave message.
+        footprint("ne", "two")
 
         // params
         footprint("You can leave multiple params like", this.javaClass, 5, false, "test")

@@ -11,41 +11,55 @@ internal const val DEFAULT_TAG = "Footprint"
 private var enableInternal = true
 private var showJsonExceptionInternal = false
 private var forceSimpleInternal = false
+private var defaultLogLevelInternal = LogPriority.DEBUG
+private var defaultStackTraceLogLevelInternal = LogPriority.ERROR
 
 fun footprintConfig(
         enable: Boolean = enableInternal,
         showJsonException: Boolean = showJsonExceptionInternal,
-        forceSimple: Boolean = forceSimpleInternal
+        forceSimple: Boolean = forceSimpleInternal,
+        defaultLogLogPriority: LogPriority = defaultLogLevelInternal,
+        defaultStackTraceLogLogPriority: LogPriority = defaultStackTraceLogLevelInternal
 ) {
     enableInternal = enable
     showJsonExceptionInternal = showJsonException
     forceSimpleInternal = forceSimple
+    defaultLogLevelInternal = defaultLogLogPriority
+    defaultStackTraceLogLevelInternal = defaultStackTraceLogLogPriority
 }
 
-fun footprint() {
-    footprintSimple(getMetaInfo())
+fun footprint(priority: LogPriority = defaultLogLevelInternal) {
+    footprintSimple(getMetaInfo(), priority = priority)
 }
 
-fun footprint(vararg messages: Any?) {
-    footprintSimple(getMetaInfo(), messages.joinToString(separator = " "))
+fun footprint(vararg messages: Any?, priority: LogPriority = defaultLogLevelInternal) {
+    footprintSimple(getMetaInfo(), messages.joinToString(separator = " "), priority = priority)
 }
 
-fun footprintSimple(vararg messages: Any?) {
-    footprintSimple(messages.joinToString(separator = " "))
+fun footprintSimple(vararg messages: Any?, priority: LogPriority = defaultLogLevelInternal) {
+    footprintSimple(messages.joinToString(separator = " "), priority = priority)
 }
 
-fun footprintSimple(message: Any?) {
-    Log.d(DEFAULT_TAG, message.toString())
+private fun footprintSimple(message: Any?, priority: LogPriority = defaultLogLevelInternal) {
+    Log.println(priority.value, DEFAULT_TAG, message.toString())
 }
 
-fun <T> T.withFootprintJson(): T {
-    footprint("\n", toFormattedJSON())
+fun <T> T.withFootprintJson(priority: LogPriority = defaultLogLevelInternal): T {
+    footprint("\n", toFormattedJSON(), priority = priority)
     return this
 }
 
-fun <T> T.withFootprint(): T {
-    footprint(this)
+fun <T> T.withFootprint(priority: LogPriority = defaultLogLevelInternal): T {
+    footprint(this, priority = priority)
     return this
+}
+
+fun Throwable.footprintStackTrace(priority: LogPriority = defaultStackTraceLogLevelInternal) {
+    footprint(Log.getStackTraceString(this), priority = priority)
+}
+
+fun footprintStackTrace(priority: LogPriority = defaultStackTraceLogLevelInternal) {
+    Throwable().footprintStackTrace(priority = priority)
 }
 
 /**
@@ -73,14 +87,6 @@ private fun Any?.toFormattedJSON(indent: Int = 2): String? {
     }
 }
 
-
-fun Throwable.footprintStackTrace() {
-    footprint(Log.getStackTraceString(this))
-}
-
-fun footprintStackTrace() {
-    Throwable().footprintStackTrace()
-}
 
 /**
  * ログ呼び出し元のメタ情報を取得する
