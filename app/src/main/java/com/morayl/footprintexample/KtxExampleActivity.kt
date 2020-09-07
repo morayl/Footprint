@@ -62,12 +62,11 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
 
         when (v.id) {
             R.id.button_stacktrace -> {
-                // StackTrace
                 try {
                     val str: String? = null
                     str!!.length
                 } catch (e: NullPointerException) {
-                    e.printStackTrace()
+                    // You can log stacktrace
                     e.stacktraceFootprint()
                     /*
                      [ExampleActivity#onClick:75] java.lang.NullPointerException
@@ -98,7 +97,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                  */
             }
             R.id.button_json -> {
-                val dataClass = DataClass("hoge", "fuga", 5, true)
+                val dataClass = SampleDataClass("hoge", "fuga", 5, true)
 
                 // log json
                 jsonFootprint(dataClass)
@@ -113,13 +112,13 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                  */
 
                 // log json with receive
-                val dataClass2 = DataClass("hoge2", "fuga2", 5, false).withJsonFootprint()
+                val dataClass2 = SampleDataClass("hoge2", "fuga2", 5, false).withJsonFootprint()
                 footprint(dataClass2.value1, dataClass2.value2, dataClass2.value3, dataClass2.value4)
             }
             R.id.button_key_values -> {
                 val isCorrect = true
                 val wasCorrect = false
-                // key and value
+                // log pair.
                 pairFootprint("isCorrect" to isCorrect, "wasCorrect" to wasCorrect)
                 /*
                  [ExampleActivity#onClick:133]
@@ -130,5 +129,8 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
         }
     }
 
-    class DataClass(var value1: String, var value2: String, var value3: Int, var value4: Boolean)
+    private data class SampleDataClass(val value1: String,
+                                       val value2: String,
+                                       val value3: Int,
+                                       val value4: Boolean)
 }
