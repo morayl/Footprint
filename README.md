@@ -4,10 +4,10 @@ Debug logger for Android-Kotlin
 Usage
 -----
 
- You just write, `footprint()` logcat show `[ClassName#MethodName:LineNumber]`
+ You just write `footprint()` logcat show `[ClassName#MethodName:LineNumber]`
 
  Please see examples
- [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt)
+ [KTxExampleActivity](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt)
 
 Download
 --------
@@ -29,10 +29,9 @@ ChangeLog
 
  See [ChangeLog](./CHANGELOG.md)
  
-Footprint.java
---------
+### Footprint.java
 Footprint.java has stopped development.
-But you can use([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)) 
+But you can use. ([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)) 
 
 License
 --------
