@@ -7,12 +7,11 @@ import com.morayl.footprint.Footprint
 import com.morayl.footprintktx.*
 
 /**
- * You can see examples. (Default LogTag is "Footprint")
+ * You can see examples.
+ * Launch this activity and see Logcat. (Default LogTag is "Footprint")
  */
 class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
-    private val field1 = "field1"
-    var field2 = true
-    var field3 = DataClass("fuga", "hoge", 100, false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
@@ -24,13 +23,19 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         "aa".withFootprint()
 
         // a param
-        footprint("You can leave message.", priority = LogPriority.ERROR)
+        footprint("You can leave message.")
         // [ExampleActivity#onCreate:29] You can leave message.
-        footprint("one", "two")
 
         // params
-        footprint("You can leave multiple params like", this.javaClass, 5, false, "test")
+        footprint("You can leave multiple params like", this::class.java, 5, false, "test")
         // [ExampleActivity#onCreate:33] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
+
+        // with setting LogPriority
+        footprint("You can leave message with set LogPriority", priority = LogPriority.ERROR)
+
+        // stand out log in many footprints log
+        accentFootprint()
+        accentFootprint("stand out", "log", 500)
 
         // Just show log. It's faster than leave because it's not use stackTrace.
         simpleFootprint("simple")
@@ -39,6 +44,7 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         // params
         simpleFootprint("simple", "multiple", "params", 1, true)
         // simple multiple params 1 true
+
         val button = findViewById<View>(R.id.button)
         button?.setOnClickListener(this)
     }
@@ -115,17 +121,6 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
           ・wasCorrect : false
          */
 
-        // fields
-        Footprint.fields(this)
-        /*
-         [ExampleActivity#onClick:141]
-          {
-            "nameValuePairs": {
-            "field1": "field1",
-            "field3": "com.morayl.footprintexample.ExampleActivity$DataClass@418187e0",
-            "field2": "true"
-          }
-         */
     }
 
     class DataClass(var value1: String, var value2: String, var value3: Int, var value4: Boolean)

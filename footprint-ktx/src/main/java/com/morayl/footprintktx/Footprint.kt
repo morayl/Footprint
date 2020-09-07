@@ -6,6 +6,10 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
+/**
+ * Footprint-Ktx
+ */
+
 private var enableInternal = true
 private var showJsonExceptionInternal = false
 private var forceSimpleInternal = false
@@ -13,21 +17,34 @@ private var logLevelInternal = LogPriority.DEBUG
 private var stackTraceLogLevelInternal = LogPriority.ERROR
 private var logTagInternal = "Footprint"
 
+/**
+ * Configure Footprint.
+ * Params not specify, the current settings will be inherited.
+ *
+ * @param enable If it false, all Footprint log are not shown. (Default true)
+ * @param showJsonException If it true, Footprint show "internal [JSONException]" when exception occurred while you use [withJsonFootprint]. (Default false)
+ * @param forceSimple If it true, all Footprint log are not use [getMetaInfo] and are not showed [Class#Method:Linenumber]. It is used for improve performance.
+ * @param defaultLogLogPriority set default LogPriority(like Verbose/Debug/Error)
+ * @param defaultStackTraceLogLogPriority Set default LogPriority when Footprint printing stacktrace.
+ * @param defaultLogTag Set default LogTag.
+ */
 fun configFootprint(
         enable: Boolean = enableInternal,
         showJsonException: Boolean = showJsonExceptionInternal,
         forceSimple: Boolean = forceSimpleInternal,
         defaultLogLogPriority: LogPriority = logLevelInternal,
         defaultStackTraceLogLogPriority: LogPriority = stackTraceLogLevelInternal,
-        logTag: String = logTagInternal
+        defaultLogTag: String = logTagInternal
 ) {
     enableInternal = enable
     showJsonExceptionInternal = showJsonException
     forceSimpleInternal = forceSimple
     logLevelInternal = defaultLogLogPriority
     stackTraceLogLevelInternal = defaultStackTraceLogLogPriority
-    logTagInternal = logTag
+    logTagInternal = defaultLogTag
 }
+
+// NOOP作りたい
 
 fun footprint(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
@@ -39,6 +56,10 @@ fun footprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, l
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
+}
+
+fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = logTagInternal) {
+    footprint(*messages, priority = LogPriority.ERROR, logTag = logTag)
 }
 
 fun simpleFootprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
@@ -65,6 +86,10 @@ fun <T> T.withFootprint(priority: LogPriority = logLevelInternal, logTag: String
         footprint(this, priority = priority, logTag = logTag)
     }
     return this
+}
+
+fun jsonFootprint(target: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
+    target.withJsonFootprint(priority, logTag)
 }
 
 fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
