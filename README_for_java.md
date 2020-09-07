@@ -1,13 +1,13 @@
-# Footprint-ktx
-Debug logger for Android-Kotlin
+# Footprint
+Debug logger for Android
 
 Usage
 -----
 
- You just write, `footprint()` logcat show `[ClassName#MethodName:LineNumber]`
+ You just write, `Footprint.leave();` logcat show `[ClassName#MethodName:LineNumber]`
 
  Please see examples
- [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt)
+ [ExampleActivity](/app/src/main/java/com/morayl/footprintexample/ExampleActivity.java)
 
 Download
 --------
@@ -17,27 +17,21 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:0.4.0'
+    debugImplementation 'com.morayl:footprint:1.4.0'
 }
 ```
 This function is a little bit slow, because using `stack trace`.
-So I recommend you to use only `debugImplementation` or switch enable with `configureFootprin()`.
-I'll release `NoOp`.
+So I recommend you to use only `debugImplementation`
 
 ChangeLog
 --------
 
  See [ChangeLog](./CHANGELOG.md)
- 
-Footprint.java
---------
-Footprint.java has stopped development.
-But you can use([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)) 
 
 License
---------
+-------
 
-    Copyright 2020 morayl
+    Copyright 2016 morayl
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
