@@ -26,11 +26,11 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
 
         // a param
         Footprint.leave("You can leave message.");
-        // [ExampleActivity#onCreate:29] You can leave message.
+        // [ExampleActivity#onCreate:28] You can leave message.
 
         // params
         Footprint.leave("You can leave multiple params like", this.getClass(), 5, false, "test");
-        // [ExampleActivity#onCreate:33] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
+        // [ExampleActivity#onCreate:32] You can leave multiple params like  class com.morayl.footprintexample.ExampleActivity 5 false test
 
         // Just show log. It's faster than leave because it's not use stackTrace.
         Footprint.simple("simple");
@@ -89,31 +89,39 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         } catch (NullPointerException e) {
             Footprint.stackTrace(e);
             /*
-             [ExampleActivity#onClick:75] java.lang.NullPointerException
-             at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:73)
-             at android.view.View.performClick(View.java:4307)
-             at android.view.View$PerformClick.run(View.java:17507)
-             at android.os.Handler.handleCallback(Handler.java:725)
-             at android.os.Handler.dispatchMessage(Handler.java:92)
-             at android.os.Looper.loop(Looper.java:137)
-             at android.app.ActivityThread.main(ActivityThread.java:5159)
-             at java.lang.reflect.Method.invokeNative(Native Method)
+            [ExampleActivity#onClick:90] java.lang.NullPointerException: Attempt to invoke virtual method 'int java.lang.String.length()' on a null object reference
+            at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:88)
+            at android.view.View.performClick(View.java:7143)
+            at android.view.View.performClickInternal(View.java:7120)
+            at android.view.View.access$3500(View.java:804)
+            at android.view.View$PerformClick.run(View.java:27433)
+            at android.os.Handler.handleCallback(Handler.java:883)
+            at android.os.Handler.dispatchMessage(Handler.java:100)
+            at android.os.Looper.loop(Looper.java:231)
+            at android.app.ActivityThread.main(ActivityThread.java:7769)
+            at java.lang.reflect.Method.invoke(Native Method)
+            at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+            at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:953)
              */
         }
 
         // You can also use with no params. You can see callers.
         Footprint.stackTrace();
         /*
-         [ExampleActivity#onClick:90] java.lang.Throwable
-         at com.morayl.footprint.Footprint.stackTrace(Footprint.java:253)
-         at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:90)
-         at android.view.View.performClick(View.java:4307)
-         at android.view.View$PerformClick.run(View.java:17507)
-         at android.os.Handler.handleCallback(Handler.java:725)
-         at android.os.Handler.dispatchMessage(Handler.java:92)
-         at android.os.Looper.loop(Looper.java:137)
-         at android.app.ActivityThread.main(ActivityThread.java:5159)
-         at java.lang.reflect.Method.invokeNative(Native Method)
+        [ExampleActivity#onClick:109] java.lang.Throwable
+        at com.morayl.footprint.Footprint.stackTrace(Footprint.java:237)
+        at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:109)
+        at android.view.View.performClick(View.java:7143)
+        at android.view.View.performClickInternal(View.java:7120)
+        at android.view.View.access$3500(View.java:804)
+        at android.view.View$PerformClick.run(View.java:27433)
+        at android.os.Handler.handleCallback(Handler.java:883)
+        at android.os.Handler.dispatchMessage(Handler.java:100)
+        at android.os.Looper.loop(Looper.java:231)
+        at android.app.ActivityThread.main(ActivityThread.java:7769)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:953)
          */
 
         DataClass dataClass = new DataClass("test", "test2", 5, true);
@@ -121,7 +129,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         // leave json
         Footprint.json(dataClass);
         /*
-         [ExampleActivity#onClick:107]
+         [ExampleActivity#onClick:130]
           {
             "value3": 5,
             "value4": true,
@@ -133,7 +141,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         // leave json with set indent
         Footprint.json(dataClass, 8);
         /*
-         [ExampleActivity#onClick:119]
+         [ExampleActivity#onClick:142]
           {
                 "value3": 5,
                 "value4": true,
@@ -147,7 +155,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         // key and value
         Footprint.keyAndValues("isCorrect", isCorrect, "wasCorrect", wasCorrect);
         /*
-         [ExampleActivity#onClick:133]
+         [ExampleActivity#onClick:156]
           ・isCorrect : true
           ・wasCorrect : false
          */
@@ -155,7 +163,7 @@ public class ExampleActivity extends AppCompatActivity implements View.OnClickLi
         // fields
         Footprint.fields(this);
         /*
-         [ExampleActivity#onClick:141]
+         [ExampleActivity#onClick:164]
           {
             "nameValuePairs": {
             "field1": "field1",

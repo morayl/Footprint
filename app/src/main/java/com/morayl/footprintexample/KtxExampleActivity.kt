@@ -1,26 +1,22 @@
 package com.morayl.footprintexample
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.morayl.footprint.Footprint
 import com.morayl.footprintktx.*
 
 /**
  * You can see examples.
  * Launch this activity and see Logcat. (Default LogTag is "Footprint")
  */
-class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
+class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sample)
 
         // You write put this.
         footprint() // [ExampleActivity#onCreate:25]
-        val f = 1.6f
-        f.withFootprint()
-        "aa".withFootprint()
 
         // a param
         footprint("You can leave message.")
@@ -32,6 +28,9 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
 
         // with setting LogPriority
         footprint("You can leave message with set LogPriority", priority = LogPriority.ERROR)
+
+        // show address when you put object(To be exact, output the toString())
+        footprint(this)
 
         // stand out log in many footprints log
         accentFootprint()
@@ -45,82 +44,90 @@ class KtxExampleActivity : AppCompatActivity(), View.OnClickListener {
         simpleFootprint("simple", "multiple", "params", 1, true)
         // simple multiple params 1 true
 
-        val button = findViewById<View>(R.id.button)
-        button?.setOnClickListener(this)
+        // log receiver with receive
+        val floatValue = 3.5f
+        floatValue.withFootprint()
+        "sample text".withFootprint()
+
+        findViewById<View>(R.id.button_stacktrace).setOnClickListener(this)
+        findViewById<View>(R.id.button_json).setOnClickListener(this)
+        findViewById<View>(R.id.button_key_values).setOnClickListener(this)
+        findViewById<View>(R.id.button_java_sample).setOnClickListener {
+            startActivity(Intent(this, ExampleActivity::class.java))
+        }
     }
 
     override fun onClick(v: View) {
         footprint() // [ExampleActivity#onClick:83]
 
-        // StackTrace
-        try {
-            val str: String? = null
-            str!!.length
-        } catch (e: NullPointerException) {
-            e.printStackTrace()
-            e.stacktraceFootprint()
-            /*
-             [ExampleActivity#onClick:75] java.lang.NullPointerException
-             at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:73)
-             at android.view.View.performClick(View.java:4307)
-             at android.view.View$PerformClick.run(View.java:17507)
-             at android.os.Handler.handleCallback(Handler.java:725)
-             at android.os.Handler.dispatchMessage(Handler.java:92)
-             at android.os.Looper.loop(Looper.java:137)
-             at android.app.ActivityThread.main(ActivityThread.java:5159)
-             at java.lang.reflect.Method.invokeNative(Native Method)
-             */
+        when (v.id) {
+            R.id.button_stacktrace -> {
+                // StackTrace
+                try {
+                    val str: String? = null
+                    str!!.length
+                } catch (e: NullPointerException) {
+                    e.printStackTrace()
+                    e.stacktraceFootprint()
+                    /*
+                     [ExampleActivity#onClick:75] java.lang.NullPointerException
+                     at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:73)
+                     at android.view.View.performClick(View.java:4307)
+                     at android.view.View$PerformClick.run(View.java:17507)
+                     at android.os.Handler.handleCallback(Handler.java:725)
+                     at android.os.Handler.dispatchMessage(Handler.java:92)
+                     at android.os.Looper.loop(Looper.java:137)
+                     at android.app.ActivityThread.main(ActivityThread.java:5159)
+                     at java.lang.reflect.Method.invokeNative(Native Method)
+                     */
+                }
+
+                // You can also use with no params. You can see callers.
+                stacktraceFootprint()
+                /*
+                 [ExampleActivity#onClick:90] java.lang.Throwable
+                 at com.morayl.footprint.Footprint.stackTrace(Footprint.java:253)
+                 at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:90)
+                 at android.view.View.performClick(View.java:4307)
+                 at android.view.View$PerformClick.run(View.java:17507)
+                 at android.os.Handler.handleCallback(Handler.java:725)
+                 at android.os.Handler.dispatchMessage(Handler.java:92)
+                 at android.os.Looper.loop(Looper.java:137)
+                 at android.app.ActivityThread.main(ActivityThread.java:5159)
+                 at java.lang.reflect.Method.invokeNative(Native Method)
+                 */
+            }
+            R.id.button_json -> {
+                val dataClass = DataClass("hoge", "fuga", 5, true)
+
+                // log json
+                jsonFootprint(dataClass)
+                /*
+                 [ExampleActivity#onClick:107]
+                  {
+                    "value3": 5,
+                    "value4": true,
+                    "value1": "test",
+                    "value2": "test2"
+                  }
+                 */
+
+                // log json with receive
+                val dataClass2 = DataClass("hoge2", "fuga2", 5, false).withJsonFootprint()
+                footprint(dataClass2.value1, dataClass2.value2, dataClass2.value3, dataClass2.value4)
+            }
+            R.id.button_key_values -> {
+                val isCorrect = true
+                val wasCorrect = false
+                // key and value
+                pairFootprint("isCorrect" to isCorrect, "wasCorrect" to wasCorrect)
+                /*
+                 [ExampleActivity#onClick:133]
+                  ・isCorrect : true
+                  ・wasCorrect : false
+                 */
+            }
         }
-
-        // You can also use with no params. You can see callers.
-        stacktraceFootprint()
-        /*
-         [ExampleActivity#onClick:90] java.lang.Throwable
-         at com.morayl.footprint.Footprint.stackTrace(Footprint.java:253)
-         at com.morayl.footprintexample.ExampleActivity.onClick(ExampleActivity.java:90)
-         at android.view.View.performClick(View.java:4307)
-         at android.view.View$PerformClick.run(View.java:17507)
-         at android.os.Handler.handleCallback(Handler.java:725)
-         at android.os.Handler.dispatchMessage(Handler.java:92)
-         at android.os.Looper.loop(Looper.java:137)
-         at android.app.ActivityThread.main(ActivityThread.java:5159)
-         at java.lang.reflect.Method.invokeNative(Native Method)
-         */
-        val dataClass = DataClass("test", "test2", 5, true)
-
-        // leave json
-        dataClass.withJsonFootprint()
-        /*
-         [ExampleActivity#onClick:107]
-          {
-            "value3": 5,
-            "value4": true,
-            "value1": "test",
-            "value2": "test2"
-          }
-         */
-
-        // leave json with set indent
-//        Footprint.json(dataClass, 8)
-        /*
-         [ExampleActivity#onClick:119]
-          {
-                "value3": 5,
-                "value4": true,
-                "value1": "test",
-                "value2": "test2"
-          }
-         */
-        val isCorrect = true
-        val wasCorrect = false
-        // key and value
-        Footprint.keyAndValues("isCorrect", isCorrect, "wasCorrect", wasCorrect)
-        /*
-         [ExampleActivity#onClick:133]
-          ・isCorrect : true
-          ・wasCorrect : false
-         */
-
     }
 
     class DataClass(var value1: String, var value2: String, var value3: Int, var value4: Boolean)

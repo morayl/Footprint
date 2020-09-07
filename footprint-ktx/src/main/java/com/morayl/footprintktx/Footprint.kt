@@ -44,8 +44,6 @@ fun configFootprint(
     logTagInternal = defaultLogTag
 }
 
-// NOOP作りたい
-
 fun footprint(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), priority = priority, logTag = logTag)
@@ -92,6 +90,13 @@ fun jsonFootprint(target: Any?, priority: LogPriority = logLevelInternal, logTag
     target.withJsonFootprint(priority, logTag)
 }
 
+fun pairFootprint(vararg pairs: Pair<String, Any?>) {
+    val message = pairs.joinToString(separator = "\n", prefix = "\n") {
+        "${it.first} : ${it.second}"
+    }
+    footprint(message)
+}
+
 fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
@@ -100,7 +105,7 @@ fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInte
 
 fun stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
-        Throwable().stacktraceFootprint(priority = priority, logTag = logTag)
+        footprint(Log.getStackTraceString(Throwable()), priority = priority, logTag = logTag)
     }
 }
 
@@ -147,7 +152,7 @@ private fun getMetaInfo(): String? {
             return getMetaInfo(elements[i])
         }
     }
-    return "none"
+    return "No meta info"
 }
 
 /**
