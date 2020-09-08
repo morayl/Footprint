@@ -7,7 +7,10 @@ import org.json.JSONException
 import org.json.JSONObject
 
 /**
- * Footprint-Ktx
+ * Footprint-ktx
+ * Leave footprint. Footprint-ktx is a library for debugging Android-Kotlin.
+ *
+ * You just write [footprint], logcat show [ClassName#MethodName:LineNumber]
  */
 
 private var enableInternal = true
@@ -24,9 +27,9 @@ private var logTagInternal = "Footprint"
  * @param enable If it false, all Footprint log are not shown. (Default true)
  * @param showJsonException If it true, Footprint show "internal [JSONException]" when exception occurred while you use [withJsonFootprint]. (Default false)
  * @param forceSimple If it true, all Footprint log are not use [getMetaInfo] and are not showed [Class#Method:Linenumber]. It is used for improve performance.
- * @param defaultLogLogPriority set default LogPriority(like Verbose/Debug/Error)
- * @param defaultStackTraceLogLogPriority Set default LogPriority when Footprint printing stacktrace.
- * @param defaultLogTag Set default LogTag.
+ * @param defaultLogLogPriority set default LogPriority(like Verbose/Debug/Error). (default [LogPriority.DEBUG])
+ * @param defaultStackTraceLogLogPriority Set default LogPriority when Footprint printing stacktrace. (default [LogPriority.ERROR])
+ * @param defaultLogTag Set default LogTag. (default "Footprint")
  */
 fun configFootprint(
         enable: Boolean = enableInternal,
@@ -44,22 +47,58 @@ fun configFootprint(
     logTagInternal = defaultLogTag
 }
 
+/**
+ * log [ClassName#MethodName:LineNumber].
+ *
+ * @param priority (Optional) log priority of this log.
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ *
+ * @see [LogPriority]
+ */
 fun footprint(priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), priority = priority, logTag = logTag)
     }
 }
 
+/**
+ * log [ClassName#MethodName:LineNumber] and messages.
+ *
+ * @param messages Messages you want to log. You can put multiple messages with using comma.
+ *                 Messages are concat at space.
+ * @param priority (Optional) log priority of this log.
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ *
+ * @see [LogPriority]
+ */
 fun footprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
 }
 
+/**
+ * log [ClassName#MethodName:LineNumber] and messages.
+ * log priority of this log is force [LogPriority.ERROR].
+ * The log could become red, so you can find log easier in many debug logs.
+ *
+ * @param messages (Optional) Messages you want to log. You can put multiple messages with using comma.
+ *                 Messages are concat at space.
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ */
 fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = logTagInternal) {
     footprint(*messages, priority = LogPriority.ERROR, logTag = logTag)
 }
 
+/**
+ * Just log messages without stacktrace information.
+ * It is faster than [footprint].
+ * Recommended when outputting many times at short intervals.
+ *
+ * @param messages (Optional) Messages you want to log. You can put multiple messages with using comma.
+ *                 Messages are concat at space.
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ */
 fun simpleFootprint(vararg messages: Any?, priority: LogPriority = logLevelInternal, logTag: String = logTagInternal) {
     if (enableInternal) {
         simpleFootprint(messages.joinToString(separator = " "), priority = priority, logTag = logTag)

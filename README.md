@@ -4,7 +4,7 @@ Debug logger for Android-Kotlin
 Usage
 -----
 
- You just write `footprint()` logcat show `[ClassName#MethodName:LineNumber]`
+ You just write `footprint()`, logcat show `[ClassName#MethodName:LineNumber]`
 
  Please see examples
  [KTxExampleActivity](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt)
