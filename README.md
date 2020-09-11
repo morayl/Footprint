@@ -1,13 +1,13 @@
-# Footprint-ktx
+# Footprint
 Debug logger for Android-Kotlin
 
 Usage
 -----
 
- You just write `footprint()`, logcat show `[ClassName#MethodName:LineNumber]`
-
- Please see examples
- [KTxExampleActivity](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt)
+ You just write `footprint()`, logcat show `[ClassName#MethodName:LineNumber]`.  
+ Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.  
+ Please see examples [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
+ You can see library methods [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
 
 Download
 --------
@@ -17,12 +17,12 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:0.4.0'
+    debugImplementation 'com.morayl:footprint-ktx:1.0.0'
 }
 ```
-This function is a little bit slow, because using `stack trace`.
-So I recommend you to use only `debugImplementation` or switch enable with `configureFootprin()`.
-I'll release `NoOp`.
+Major functions are a little bit slow, because using `stack trace`.  
+Recommend using only `debugImplementation` or switch enable using `configureFootprint()`.  
+(Or please wait releasing `NoOp`.)
 
 ChangeLog
 --------
@@ -30,8 +30,9 @@ ChangeLog
  See [ChangeLog](./CHANGELOG.md)
  
 ### Footprint.java
-Footprint.java has stopped development.
-But you can use. ([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)) 
+Footprint.java has stopped development.  
+But you can use. ([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)).  
+In Java, you "can" use Footprint-ktx to write FootprintKt.~ but it's not useful.
 
 License
 --------
