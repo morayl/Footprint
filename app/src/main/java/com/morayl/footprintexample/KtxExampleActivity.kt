@@ -120,6 +120,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 val wasCorrect = false
                 // log pair.
                 pairFootprint("isCorrect" to isCorrect, "wasCorrect" to wasCorrect)
+                pairFootprint("first" to 1, "second" to "secondValue", "third" to 3.toString())
                 /*
                  [ExampleActivity#onClick:133]
                   ・isCorrect : true
