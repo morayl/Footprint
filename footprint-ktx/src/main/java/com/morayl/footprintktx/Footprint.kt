@@ -25,46 +25,46 @@ import org.json.JSONObject
  */
 
 private var enableInternal = true
-private var logTagInternal = "Footprint"
-private var logPriorityInternal = LogPriority.DEBUG
+private var defaultLogTag = "Footprint"
+private var defaultLogPriority = LogPriority.DEBUG
 private var showJsonExceptionInternal = false
 private var forceSimpleInternal = false
-private var stackTraceLogLevelInternal = LogPriority.ERROR
-private var defaultJsonIndentCountInternal = 4
+private var defaultStackTraceLogLevel = LogPriority.ERROR
+private var defaultJsonIndentCount = 4
 
 /**
- * Configure Footprint.
+ * Configure default of Footprint.
  * Params not specify, the current settings will be inherited.
  * This settings available in memory.
  *
  * @param enable If it false, all Footprint log are not shown. (Default true)
- * @param defaultLogTag Set default LogTag. (default "Footprint")
- * @param defaultLogPriority Set default [LogPriority] (like Verbose/Debug/Error). (Default [LogPriority.DEBUG])
+ * @param logTag Set default LogTag. (default "Footprint")
+ * @param logPriority Set default [LogPriority] (like Verbose/Debug/Error). (Default [LogPriority.DEBUG])
  * @param showInternalJsonException If it true, Footprint show "internal [JSONException]"
  *                                  when exception occurred while you use [withJsonFootprint]. (Default false)
  * @param forceSimple If it true, all Footprint log are not use [getMetaInfo] and are not showed [Class#Method:Linenumber].
  *                    It is used for improve performance. (Default false)
- * @param defaultStackTraceLogLogPriority Set default LogPriority when Footprint printing stacktrace. (Default [LogPriority.ERROR])
- * @param defaultJsonIndentCount Set default count of Json Indention space.
+ * @param stacktraceLogLogPriority Set default LogPriority when Footprint printing stacktrace. (Default [LogPriority.ERROR])
+ * @param jsonIndentCount Set default count of Json Indention space.
  *
  * @see [LogPriority]
  */
 fun configFootprint(
         enable: Boolean = enableInternal,
-        defaultLogTag: String = logTagInternal,
-        defaultLogPriority: LogPriority = logPriorityInternal,
+        logTag: String = defaultLogTag,
+        logPriority: LogPriority = defaultLogPriority,
         showInternalJsonException: Boolean = showJsonExceptionInternal,
         forceSimple: Boolean = forceSimpleInternal,
-        defaultStackTraceLogLogPriority: LogPriority = stackTraceLogLevelInternal,
-        defaultJsonIndentCount: Int = defaultJsonIndentCountInternal
+        stacktraceLogLogPriority: LogPriority = defaultStackTraceLogLevel,
+        jsonIndentCount: Int = defaultJsonIndentCount
 ) {
     enableInternal = enable
-    logTagInternal = defaultLogTag
-    logPriorityInternal = defaultLogPriority
+    defaultLogTag = logTag
+    defaultLogPriority = logPriority
     showJsonExceptionInternal = showInternalJsonException
     forceSimpleInternal = forceSimple
-    stackTraceLogLevelInternal = defaultStackTraceLogLogPriority
-    defaultJsonIndentCountInternal = defaultJsonIndentCount
+    defaultStackTraceLogLevel = stacktraceLogLogPriority
+    defaultJsonIndentCount = jsonIndentCount
 }
 
 /**
@@ -75,7 +75,7 @@ fun configFootprint(
  *
  * @see [LogPriority]
  */
-fun footprint(priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun footprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), priority = priority, logTag = logTag)
     }
@@ -92,7 +92,7 @@ fun footprint(priority: LogPriority = logPriorityInternal, logTag: String = logT
  *
  * @see [LogPriority]
  */
-fun footprint(vararg messages: Any?, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun footprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         simpleFootprint(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
@@ -108,7 +108,7 @@ fun footprint(vararg messages: Any?, priority: LogPriority = logPriorityInternal
  *                 Messages are concat at space.
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = logTagInternal) {
+fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = defaultLogTag) {
     footprint(*messages, priority = LogPriority.ERROR, logTag = logTag)
 }
 
@@ -121,7 +121,7 @@ fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = logTa
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun simpleFootprint(message: Any?, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun simpleFootprint(message: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         Log.println(priority.value, logTag, message.toString())
     }
@@ -138,7 +138,7 @@ fun simpleFootprint(message: Any?, priority: LogPriority = logPriorityInternal, 
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun simpleFootprint(vararg messages: Any?, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         simpleFootprint(messages.joinToString(separator = " "), priority = priority, logTag = logTag)
     }
@@ -154,7 +154,7 @@ fun simpleFootprint(vararg messages: Any?, priority: LogPriority = logPriorityIn
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCountInternal, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     target.withJsonFootprint(indent, priority, logTag)
 }
 
@@ -170,7 +170,7 @@ fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCountInternal, pr
  * @param logTag (Optional) Logcat-log's tag of this log.
  * @return Receiver (this).
  */
-fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCountInternal, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal): T {
+fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag): T {
     if (enableInternal) {
         footprint("\n", toFormattedJSON(indent), priority = priority, logTag = logTag)
     }
@@ -186,7 +186,7 @@ fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCountInternal, priori
  * @param logTag (Optional) Logcat-log's tag of this log.
  * @return Receiver (this).
  */
-fun <T> T.withFootprint(priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal): T {
+fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag): T {
     if (enableInternal) {
         footprint(this, priority = priority, logTag = logTag)
     }
@@ -206,7 +206,7 @@ fun <T> T.withFootprint(priority: LogPriority = logPriorityInternal, logTag: Str
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = logPriorityInternal, logTag: String = logTagInternal) {
+fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     val message = pairs.joinToString(separator = "\n", prefix = "\n") {
         "${it.first} : ${it.second}"
     }
@@ -220,7 +220,7 @@ fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = logP
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
+fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
     }
@@ -233,7 +233,7 @@ fun Throwable.stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInte
  * @param priority (Optional) Log priority of this log. select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun stacktraceFootprint(priority: LogPriority = stackTraceLogLevelInternal, logTag: String = logTagInternal) {
+fun stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(Throwable()), priority = priority, logTag = logTag)
     }

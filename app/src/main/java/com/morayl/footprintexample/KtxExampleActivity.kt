@@ -170,24 +170,24 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // More information of params, see method declaration.
                 configFootprint(
                         enable = true,
-                        defaultLogTag = "FootprintConfigured",
-                        defaultLogPriority = LogPriority.ERROR,
+                        logTag = "FootprintConfigured",
+                        logPriority = LogPriority.ERROR,
                         showInternalJsonException = true,
                         forceSimple = true,
-                        defaultStackTraceLogLogPriority = LogPriority.DEBUG,
-                        defaultJsonIndentCount = 2
+                        stacktraceLogLogPriority = LogPriority.DEBUG,
+                        jsonIndentCount = 2
                 )
                 recreate()
             }
             R.id.button_configure_default -> {
                 configFootprint(
                         enable = true,
-                        defaultLogTag = "Footprint",
-                        defaultLogPriority = LogPriority.DEBUG,
+                        logTag = "Footprint",
+                        logPriority = LogPriority.DEBUG,
                         showInternalJsonException = false,
                         forceSimple = false,
-                        defaultStackTraceLogLogPriority = LogPriority.ERROR,
-                        defaultJsonIndentCount = 4
+                        stacktraceLogLogPriority = LogPriority.ERROR,
+                        jsonIndentCount = 4
                 )
                 recreate()
             }
