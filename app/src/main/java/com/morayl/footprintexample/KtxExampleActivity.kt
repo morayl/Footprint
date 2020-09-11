@@ -91,8 +91,8 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 stacktraceFootprint()
                 /*
                  [KtxExampleActivity#onClick:91] java.lang.Throwable
-                 at com.morayl.footprintktx.FootprintKt.stacktraceFootprint(Footprint.kt:232)
-                 at com.morayl.footprintktx.FootprintKt.stacktraceFootprint$default(Footprint.kt:230)
+                 at com.morayl.footprintktx.FootprintKt.stacktraceFootprint(Footprint.kt:238)
+                 at com.morayl.footprintktx.FootprintKt.stacktraceFootprint$default(Footprint.kt:236)
                  at com.morayl.footprintexample.KtxExampleActivity.onClick(KtxExampleActivity.kt:91)
                  at android.view.View.performClick(View.java:7155)
                  at android.view.View.performClickInternal(View.java:7132)
@@ -170,22 +170,24 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // More information of params, see method declaration.
                 configFootprint(
                         enable = true,
-                        showJsonException = true,
+                        defaultLogTag = "FootprintConfigured",
+                        defaultLogPriority = LogPriority.ERROR,
+                        showInternalJsonException = true,
                         forceSimple = true,
-                        defaultLogLogPriority = LogPriority.ERROR,
                         defaultStackTraceLogLogPriority = LogPriority.DEBUG,
-                        defaultLogTag = "FootprintConfigured"
+                        defaultJsonIndentCount = 2
                 )
                 recreate()
             }
             R.id.button_configure_default -> {
                 configFootprint(
                         enable = true,
-                        showJsonException = false,
+                        defaultLogTag = "Footprint",
+                        defaultLogPriority = LogPriority.DEBUG,
+                        showInternalJsonException = false,
                         forceSimple = false,
-                        defaultLogLogPriority = LogPriority.DEBUG,
                         defaultStackTraceLogLogPriority = LogPriority.ERROR,
-                        defaultLogTag = "Footprint"
+                        defaultJsonIndentCount = 4
                 )
                 recreate()
             }
