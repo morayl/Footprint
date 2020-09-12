@@ -38,7 +38,8 @@ ChangeLog
 
  See [ChangeLog](./CHANGELOG.md)
  
-### Footprint.java
+Old library(Footprint.java)
+---------------------------
 Footprint.java has stopped development.  
 But you can use. ([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)).  
 In Java, you "can" use Footprint-ktx to write FootprintKt.~ but it's not useful.
