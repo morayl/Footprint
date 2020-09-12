@@ -1,13 +1,20 @@
 # Footprint
-Debug logger for Android-Kotlin
+Debug logger for Android-Kotlin.
 
 Usage
 -----
 
- You just write `footprint()`, logcat show `[ClassName#MethodName:LineNumber]`.  
+ You just write `footprint()`, logcat shows `[ClassName#MethodName:LineNumber]` when program reach the line.
+ ```kotlin
+ class SampleActivity: AppCompatActivity() {
+     override fun onCreate(savedInstanceState: Bundle?) {
+         footprint() // [SampleActivity#onCreate:3]
+     }
+ }
+ ```
  Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.  
- Please see examples [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
- You can see library methods [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
+ Please see examples at [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
+ You can see library methods at [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
 
 Download
 --------
@@ -20,8 +27,10 @@ dependencies {
     debugImplementation 'com.morayl:footprint-ktx:1.0.0'
 }
 ```
+This library is suitable for bug investigation or log during development.  
 Major functions are a little bit slow, because using `stack trace`.  
-Recommend using only `debugImplementation` or switch enable using `configureFootprint()`.  
+Recommend, using `debugImplementation` and remove footprint's codes before release build.  
+Or use `implementation` and switch enable using `configureFootprint(enable = BuildConfig.DEBUG)`.  
 (Or please wait releasing `NoOp`.)
 
 ChangeLog
