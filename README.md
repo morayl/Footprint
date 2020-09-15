@@ -8,7 +8,8 @@ Usage
  ```kotlin
  class SampleActivity: AppCompatActivity() {
      override fun onCreate(savedInstanceState: Bundle?) {
-         footprint() // [SampleActivity#onCreate:3]
+         super.onCreate(savedInstanceState)
+         footprint() // [SampleActivity#onCreate:4]
      }
  }
  ```
