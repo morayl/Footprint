@@ -25,7 +25,7 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:1.0.0'
+    debugImplementation 'com.morayl:footprint-ktx:1.0.1'
 }
 ```
 This library is suitable for bug investigation or log during development.  

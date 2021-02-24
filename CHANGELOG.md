@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.0.1 *(2021-02-24)*
+----------------------------
+
+ * Fix: Changed to consider nullable of StackTraceElement#getFileName.
+
 Version 1.0.0 *(2020-09-11)*
 ----------------------------
 
