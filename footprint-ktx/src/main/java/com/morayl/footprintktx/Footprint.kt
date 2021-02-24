@@ -278,7 +278,7 @@ private fun getMetaInfo(): String? {
     // Get stackTraceElement array. // 0: VM, 1: Thread, 2: This method, 3: Caller of this method...
     val elements = Thread.currentThread().stackTrace
     for (i in 2 until elements.size) {
-        if (!elements[i].fileName.startsWith("Footprint")) {
+        if (elements[i].fileName?.startsWith("Footprint") == false) {
             return getMetaInfo(elements[i])
         }
     }
@@ -293,7 +293,7 @@ private fun getMetaInfo(): String? {
  */
 private fun getMetaInfo(element: StackTraceElement): String? {
     val fullClassName = element.className
-    val simpleClassName = fullClassName.substring(fullClassName.lastIndexOf(".") + 1)
+    val simpleClassName = fullClassName?.substring(fullClassName.lastIndexOf(".") + 1)
     val methodName = element.methodName
     val lineNumber = element.lineNumber
     return "[$simpleClassName#$methodName:$lineNumber]"
