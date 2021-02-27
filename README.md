@@ -31,9 +31,9 @@ dependencies {
 ```
 This library is suitable for bug investigation or log during development.  
 Major functions are a little bit slow, because using `stack trace`.  
-Recommend, using `debugImplementation` and remove footprint's codes before release build.
-Or use `footprint-ktx-noop` in releaseImplementation.
-Or use `implementation` and switch enable using `configureFootprint(enable = BuildConfig.DEBUG)`.
+Recommend, using `debugImplementation` and remove footprint's codes before release build.   
+Or use `footprint-ktx-noop` in releaseImplementation.   
+Or use `implementation` and switch enable using `configureFootprint(enable = BuildConfig.DEBUG)`.   
 
 ChangeLog
 --------
