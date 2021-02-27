@@ -25,14 +25,15 @@ repositories {
     maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:1.0.1'
+    debugImplementation 'com.morayl:footprint-ktx:1.1.0'
+    releaseImplementation 'com.morayl:footprint-ktx-noop:1.1.0'
 }
 ```
 This library is suitable for bug investigation or log during development.  
 Major functions are a little bit slow, because using `stack trace`.  
-Recommend, using `debugImplementation` and remove footprint's codes before release build.  
-Or use `implementation` and switch enable using `configureFootprint(enable = BuildConfig.DEBUG)`.  
-(Or please wait releasing `NoOp`.)
+Recommend, using `debugImplementation` and remove footprint's codes before release build.
+Or use `footprint-ktx-noop` in releaseImplementation.
+Or use `implementation` and switch enable using `configureFootprint(enable = BuildConfig.DEBUG)`.
 
 ChangeLog
 --------
@@ -48,7 +49,7 @@ In Java, you "can" use Footprint-ktx to write FootprintKt.~ but it's not useful.
 License
 --------
 
-    Copyright 2020 morayl
+    Copyright 2021 morayl
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

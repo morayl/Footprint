@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 1.1.0 *(2021-02-27)*
+----------------------------
+
+ * New: NoOp Library `footprint-ktx-noop` released. It is useful in releaseImplementation.
+ * New: `withJsonFootprint` and `withFootprint` are able to receive "block (T) -> Any?".
+ * New: `withSimpleFootprint`.
+
 Version 1.0.1 *(2021-02-24)*
 ----------------------------
 
