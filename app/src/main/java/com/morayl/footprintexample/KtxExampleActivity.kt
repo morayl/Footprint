@@ -49,18 +49,24 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
         // simple multiple params 1 true
 
         // log receiver with receive
-        val floatValue = 3.5f.withFootprint()
+        val floatValue: Float = 3.5f.withFootprint()
         // [KtxExampleActivity#onCreate:52] 3.5
-        val textAndNumber = "sample text and float:$floatValue".withFootprint()
+        val textAndNumber: String = "sample text and float:$floatValue".withFootprint()
         // [KtxExampleActivity#onCreate:54] sample text and float:3.5
         footprint(textAndNumber)
         // [KtxExampleActivity#onCreate:56] sample text and float:3.5
+        val text: String = "sample text".withFootprint { it.length }
+        // [KtxExampleActivity#onCreate:58] 11
+        val intValue: Int = 100.withSimpleFootprint()
+        // 100
+        val intValue2: Int = 100.withSimpleFootprint { "Number is $it" }
+        // Number is 100
 
         initButtons()
     }
 
     override fun onClick(v: View) {
-        footprint() // [ExampleActivity#onClick:63]
+        footprint() // [ExampleActivity#onClick:69]
 
         when (v.id) {
             R.id.button_stacktrace -> {
@@ -71,8 +77,8 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                     // You can log stacktrace.
                     e.stacktraceFootprint()
                     /*
-                     [KtxExampleActivity#onClick:72] java.lang.NullPointerException
-                     at com.morayl.footprintexample.KtxExampleActivity.onClick(KtxExampleActivity.kt:69)
+                     [KtxExampleActivity#onClick:78] java.lang.NullPointerException
+                     at com.morayl.footprintexample.KtxExampleActivity.onClick(KtxExampleActivity.kt:75)
                      at android.view.View.performClick(View.java:7155)
                      at android.view.View.performClickInternal(View.java:7132)
                      at android.view.View.access$3500(View.java:816)
@@ -90,7 +96,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // You can also use with no params. You can see callers.
                 stacktraceFootprint()
                 /*
-                 [KtxExampleActivity#onClick:91] java.lang.Throwable
+                 [KtxExampleActivity#onClick:97] java.lang.Throwable
                  at com.morayl.footprintktx.FootprintKt.stacktraceFootprint(Footprint.kt:238)
                  at com.morayl.footprintktx.FootprintKt.stacktraceFootprint$default(Footprint.kt:236)
                  at com.morayl.footprintexample.KtxExampleActivity.onClick(KtxExampleActivity.kt:91)
@@ -114,7 +120,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // Log json.
                 jsonFootprint(dataClass)
                 /*
-                 [KtxExampleActivity#onClick:115]
+                 [KtxExampleActivity#onClick:121]
                  {
                     "value1": "hoge",
                     "value2": "fuga",
@@ -131,7 +137,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // log json with receive
                 val dataClass2 = SampleData("hoge2", "fuga2", 5, false, innerDataClass).withJsonFootprint()
                 /*
-                [KtxExampleActivity#onClick:132]
+                [KtxExampleActivity#onClick:138]
                  {
                     "value1": "hoge2",
                     "value2": "fuga2",
@@ -145,7 +151,16 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                  }
                  */
                 footprint(dataClass2.value1, dataClass2.value2, dataClass2.value3, dataClass2.value4, dataClass2.value5.name)
-                // [KtxExampleActivity#onClick:147] hoge2 fuga2 5 false name
+                // [KtxExampleActivity#onClick:153] hoge2 fuga2 5 false name
+                val dataClass3 = SampleData("hoge2", "fuga2", 5, false, innerDataClass).withJsonFootprint { it.value5 }
+                /*
+                [KtxExampleActivity#onClick:155]
+                 {
+                    "count": 3,
+                    "float": 5.5,
+                    "name": "name"
+                }
+                 */
             }
             R.id.button_key_values -> {
                 val isCorrect = true
@@ -153,13 +168,13 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                 // Log pair.
                 pairFootprint("isCorrect" to isCorrect, "wasCorrect" to wasCorrect)
                 /*
-                [KtxExampleActivity#onClick:154]
+                [KtxExampleActivity#onClick:169]
                 isCorrect : true
                 wasCorrect : false
                  */
                 pairFootprint("first" to 1, "second" to "secondValue", "third" to 3.toString())
                 /*
-                [KtxExampleActivity#onClick:160]
+                [KtxExampleActivity#onClick:175]
                 first : 1
                 second : secondValue
                 third : 3

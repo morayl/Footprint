@@ -38,7 +38,7 @@ private var defaultJsonIndentCount = 4
  * This settings available in memory.
  *
  * @param enable If it false, all Footprint log are not shown. (Default true)
- * @param logTag Set default LogTag. (default "Footprint")
+ * @param logTag Set default LogTag. (Default "Footprint")
  * @param logPriority Set default [LogPriority] (like Verbose/Debug/Error). (Default [LogPriority.DEBUG])
  * @param showInternalJsonException If it true, Footprint show "internal [JSONException]"
  *                                  when exception occurred while you use [withJsonFootprint]. (Default false)
@@ -70,7 +70,7 @@ fun configFootprint(
 /**
  * Log [ClassName#MethodName:LineNumber].
  *
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  *
  * @see [LogPriority]
@@ -118,7 +118,7 @@ fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = defau
  * Recommended when using many times at short intervals.
  *
  * @param message Messages you want to log.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun simpleFootprint(message: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
@@ -135,7 +135,7 @@ fun simpleFootprint(message: Any?, priority: LogPriority = defaultLogPriority, l
  * @param messages (Optional) Messages you want to log.
  *                 This param is vararg, you can put multiple messages with using comma.
  *                 Messages are concat at space.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
@@ -151,7 +151,7 @@ fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPri
  *               If target Json conversion failed, it show toString().
  *               Want to know failure reason, use [#configFootprint(showJsonExceptionInternal = true)]
  * @param indent (Optional) Count of Json Indention space.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
@@ -159,51 +159,72 @@ fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCount, priority: 
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and receiver as Json.
+ * Log [ClassName#MethodName:LineNumber] and receiver as Json. And return receiver.
  * Want to log primitive value, use [withFootprint].
  * If receiver Json conversion failed, it show toString().
  * Want to know failure reason, use [configFootprint] and "showJsonExceptionInternal = true".
  *
  * @receiver Object you want to log as json.
  * @param indent (Optional) Count of Json Indention space.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
+ * @param block (Optional) Variable which you want to log. Default is "this".
  * @return Receiver (this).
  */
-fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag): T {
+fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority,
+                            logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
     if (enableInternal) {
-        footprint("\n", toFormattedJSON(indent), priority = priority, logTag = logTag)
+        footprint("\n", block(this).toFormattedJSON(indent), priority = priority, logTag = logTag)
     }
     return this
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and receiver as toString().
+ * Log [ClassName#MethodName:LineNumber] and receiver as toString(). And return receiver.
  * Want to log object json, use [withJsonFootprint].
  *
  * @receiver Object you want to log as toString().
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
+ * @param block (Optional) Variable which you want to log as toString(). Default is "this".
  * @return Receiver (this).
  */
-fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag): T {
+fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
     if (enableInternal) {
-        footprint(this, priority = priority, logTag = logTag)
+        footprint(block(this), priority = priority, logTag = logTag)
+    }
+    return this
+}
+
+/**
+ * Just log receiver as toString() without stacktrace information. And return receiver.
+ * It is faster than [withFootprint].
+ * Recommended when outputting many times at short intervals.
+ *
+ * @receiver Object you want to log as toString().
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ * @param block (Optional) Variable which you want to log as toString(). Default is "this".
+ * @return Receiver (this).
+ */
+fun <T> T.withSimpleFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
+    if (enableInternal) {
+        simpleFootprint(block(this), priority = priority, logTag = logTag)
     }
     return this
 }
 
 /**
  * Log [ClassName#MethodName:LineNumber] and pair values.
- * usage: pairFootprint("first" to 1, "second" to "secondValue", "third" to 3.toString())
- * output: [ClassName#MethodName:LineNumber]
+ * Usage: pairFootprint("first" to 1, "second" to "secondValue", "third" to 3.toString())
+ * Output: [ClassName#MethodName:LineNumber]
  *         first : 1
  *         second : secondValue
  *         third : 3
  *
  * @param pairs Value pairs you want to log.
  *              This param is vararg, you can put multiple messages with using comma.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
@@ -217,7 +238,7 @@ fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defa
  * Log [ClassName#MethodName:LineNumber] and stacktrace of exception.
  *
  * @receiver [Throwable] you want to log as stacktrace string.
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
@@ -230,7 +251,7 @@ fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLe
  * Log [ClassName#MethodName:LineNumber] and current stacktrace.
  * Useful for confirming calling hierarchy.
  *
- * @param priority (Optional) Log priority of this log. select from [LogPriority].
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
 fun stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
