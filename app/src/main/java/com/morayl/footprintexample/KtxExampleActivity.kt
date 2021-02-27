@@ -44,11 +44,11 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
         simpleFootprint("simple")
         // simple
 
-        // params
+        // Params
         simpleFootprint("simple", "multiple", "params", 1, true)
         // simple multiple params 1 true
 
-        // log receiver with receive
+        // Log receiver with receiving
         val floatValue: Float = 3.5f.withFootprint()
         // [KtxExampleActivity#onCreate:52] 3.5
         val textAndNumber: String = "sample text and float:$floatValue".withFootprint()
@@ -134,7 +134,7 @@ class KtxExampleActivity : AppCompatActivity(R.layout.activity_ktx_exsample), Vi
                  }
                  */
 
-                // log json with receive
+                // Log json with receiving
                 val dataClass2 = SampleData("hoge2", "fuga2", 5, false, innerDataClass).withJsonFootprint()
                 /*
                 [KtxExampleActivity#onClick:138]
