@@ -1,2 +1,3 @@
-include ':footprint-ktx'
 include ':app', ':footprint'
+include ':footprint-ktx'
+include ':footprint-ktx-noop'
