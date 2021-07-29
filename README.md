@@ -22,7 +22,7 @@ Download
 
 ```groovy
 repositories {
-    maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
+    maven { url 'https://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
     debugImplementation 'com.morayl:footprint-ktx:1.1.0'
