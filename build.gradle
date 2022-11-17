@@ -5,7 +5,7 @@ buildscript {
         kotlin_version = '1.5.21'
     }
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
     dependencies {
@@ -19,7 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
 }
