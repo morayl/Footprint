@@ -1,7 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply from: 'deploy.gradle'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+}
 
 android {
     compileSdkVersion 30
@@ -18,6 +19,12 @@ android {
         }
     }
     namespace 'com.morayl.footprintktx'
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -26,16 +33,22 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 }
 
-def repo = new File(rootDir, "repository")
-apply plugin: 'maven'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository url: "file://${repo.absolutePath}"
-            pom.version = '1.1.0'
-            pom.groupId = 'com.morayl'
-            pom.artifactId = 'footprint-ktx'
+                groupId = 'com.morayl'
+                artifactId = 'footprint-ktx'
+                version = '1.1.0'
+            }
+        }
+        repositories {
+            maven {
+                name = 'footprint-ktx'
+                url = "${project.rootDir}/repository"
+            }
         }
     }
 }

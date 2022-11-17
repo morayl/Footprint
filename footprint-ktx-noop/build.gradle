@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 android {
@@ -18,22 +19,34 @@ android {
         }
     }
     namespace 'com.morayl.footprintktx'
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
-def repo = new File(rootDir, "repository")
-apply plugin: 'maven'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository url: "file://${repo.absolutePath}"
-            pom.version = '1.1.0'
-            pom.groupId = 'com.morayl'
-            pom.artifactId = 'footprint-ktx-noop'
+                groupId = 'com.morayl'
+                artifactId = 'footprint-ktx-noop'
+                version = '1.1.0'
+            }
+        }
+        repositories {
+            maven {
+                name = 'footprint-ktx-noop'
+                url = "${project.rootDir}/repository"
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply from: 'deploy.gradle'
 
 android {
     compileSdkVersion 28
@@ -20,16 +19,3 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
 }
 
-def repo = new File(rootDir, "repository")
-apply plugin: 'maven'
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository url: "file://${repo.absolutePath}"
-            pom.version = '1.4.0'
-            pom.groupId = 'com.morayl'
-            pom.artifactId = 'footprint'
-        }
-    }
-}
