@@ -18,6 +18,7 @@ buildscript {
 }
 
 allprojects {
+    apply from: "$project.rootDir/versions.gradle"
     repositories {
         mavenCentral()
         google()
