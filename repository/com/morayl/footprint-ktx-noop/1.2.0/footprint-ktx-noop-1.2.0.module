@@ -1,0 +1,107 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.morayl",
+    "module": "footprint-ktx-noop",
+    "version": "1.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.4"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-noop-1.2.0.aar",
+          "url": "footprint-ktx-noop-1.2.0.aar",
+          "size": 7654,
+          "sha512": "54fc62d4b69524507c065568319a3a1197f79c973ef3fd3e052b30945d0893c08afe8970d75e643bc8932f645e2391dbcf1de473adc7372d7d35ada02f19af99",
+          "sha256": "17540fa7404b89bfe1ea2e135194a9d5fc7a90fd772225114f059cc3efb19ba1",
+          "sha1": "f989a14e9f618ee933e356ee7ce15759ad6032cd",
+          "md5": "722504defcee4c19f5821af785db60d3"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.7.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "footprint-ktx-noop-1.2.0.aar",
+          "url": "footprint-ktx-noop-1.2.0.aar",
+          "size": 7654,
+          "sha512": "54fc62d4b69524507c065568319a3a1197f79c973ef3fd3e052b30945d0893c08afe8970d75e643bc8932f645e2391dbcf1de473adc7372d7d35ada02f19af99",
+          "sha256": "17540fa7404b89bfe1ea2e135194a9d5fc7a90fd772225114f059cc3efb19ba1",
+          "sha1": "f989a14e9f618ee933e356ee7ce15759ad6032cd",
+          "md5": "722504defcee4c19f5821af785db60d3"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-noop-1.2.0-sources.jar",
+          "url": "footprint-ktx-noop-1.2.0-sources.jar",
+          "size": 1872,
+          "sha512": "cbee346fee8312cb93de425a5fe7b1b57967f1b088b9bf5ac8e2060827500954eec0d7e35f083128c554ee6dc03501057f5c04dae263f150f76a10073ae27148",
+          "sha256": "abf1febcf57719075d2a748ef0a20880605b4f5cf47b37d0ad8733f1ccc7a5c8",
+          "sha1": "bf313a8929762a2a07c1d9bccfd35d2be2ac3777",
+          "md5": "501766e9bb05eac648b56654380515ab"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-noop-1.2.0-javadoc.jar",
+          "url": "footprint-ktx-noop-1.2.0-javadoc.jar",
+          "size": 288053,
+          "sha512": "3c29024559dfe78d5ac89fcb2f2f8be83d465f1b293a54785929c7c437b35e4b4105bd6c69c0f30f3670d6d118874ea12ec52258b325d74e294577fee9e45a99",
+          "sha256": "5d1651656b94853eb390b12561c2fcccbb2cc352a0463d8a7c666740f37ff90e",
+          "sha1": "609469bdd4dd4c7b9def8f5d1d0351ccace6391d",
+          "md5": "864f4d986f65e4deae7f3b44646b90ba"
+        }
+      ]
+    }
+  ]
+}
