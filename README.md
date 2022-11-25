@@ -4,16 +4,20 @@ Debug logger for Android-Kotlin.
 Usage
 -----
 
- You just write `footprint()`, logcat shows `[ClassName#MethodName:LineNumber]` when program reach the line.
+ You just write `footprint()`, logcat shows `[ClassName#MethodName:LineNumber] + (links to the line of code)` when program reach the line.
  ```kotlin
  class SampleActivity: AppCompatActivity() {
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
-         footprint() // [SampleActivity#onCreate:4]
+         footprint() // [SampleActivity#onCreate:4] + (links to the line of code)
      }
  }
  ```
- Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.  
+ Logcat shows as below. (When starting [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).)
+
+ ![Logcat Image](resource/logcat_image.png)
+
+ Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.
  Please see examples at [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
  You can see library methods at [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
 
@@ -25,8 +29,8 @@ repositories {
     maven { url 'https://raw.github.com/morayl/Footprint/master/repository' }
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:1.1.0'
-    releaseImplementation 'com.morayl:footprint-ktx-noop:1.1.0'
+    debugImplementation 'com.morayl:footprint-ktx:1.2.0'
+    releaseImplementation 'com.morayl:footprint-ktx-noop:1.2.0'
 }
 ```
 This library is suitable for bug investigation or log during development.  
@@ -49,7 +53,7 @@ In Java, you "can" use Footprint-ktx to write FootprintKt.~ but it's not useful.
 License
 --------
 
-    Copyright 2021 morayl
+    Copyright 2022 morayl
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

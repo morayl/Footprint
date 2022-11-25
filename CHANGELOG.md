@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.2.0 *(2022-11-25)*
+----------------------------
+
+ * New: Added links to the line of code. You can jump to the line of code when you press it.
+
 Version 1.1.0 *(2021-02-27)*
 ----------------------------
 
