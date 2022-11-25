@@ -14,8 +14,10 @@ Usage
  }
  ```
  Logcat shows as below. (When starting [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).)
+
  ![Logcat Image](resource/logcat_image.png)
- Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.  
+
+ Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.
  Please see examples at [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
  You can see library methods at [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
 
