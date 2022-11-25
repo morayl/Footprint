@@ -2,6 +2,8 @@ package com.morayl.footprintktx
 
 import android.util.Log
 import com.google.gson.Gson
+import com.morayl.footprintktx.MetaInfo.Companion.prefixString
+import com.morayl.footprintktx.MetaInfo.Companion.suffixString
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -10,16 +12,18 @@ import org.json.JSONObject
  * Leave footprint.
  * Footprint-ktx is a library for debugging Android-Kotlin.
  *
- * You just use [footprint], logcat shows "[ClassName#MethodName:LineNumber]".
+ * You just use [footprint], logcat shows "[ClassName#MethodName:LineNumber] + (links to the line of code)".
+ * Actually displayed as "[ClassName#MethodName:LineNumber] + (FileName:LineNumber)".
+ * The parentheses at the end are links, and you can jump to the line of code when you press it.
  * You can log multiple params, object as json, pair values, stacktrace.
  *  → [jsonFootprint], [withJsonFootprint], [pairFootprint], [stacktraceFootprint].
  * You can configure enable, log level, etc. Use [configFootprint].
  *
- * [footprint] use [StackTraceElement] to log "[ClassName#MethodName:LineNumber]",
+ * [footprint] use [StackTraceElement] to log "[ClassName#MethodName:LineNumber] + (links to the line of code)",
  * it is a bit heavy and may slow down the UI thread
  * if you call a lot at short intervals like a long "for" statement.
  * You can use [simpleFootprint], which is faster than [footprint]
- * because it doesn't use [StackTraceElement]. (It doesn't log "[ClassName#MethodName:LineNumber]".)
+ * because it doesn't use [StackTraceElement]. (It doesn't log "[ClassName#MethodName:LineNumber]+ (links to the line of code)".)
  *
  * (In Java, You "can" use to write FootprintKt.~ but it's not useful.)
  */
@@ -42,7 +46,7 @@ private var defaultJsonIndentCount = 4
  * @param logPriority Set default [LogPriority] (like Verbose/Debug/Error). (Default [LogPriority.DEBUG])
  * @param showInternalJsonException If it true, Footprint show "internal [JSONException]"
  *                                  when exception occurred while you use [withJsonFootprint]. (Default false)
- * @param forceSimple If it true, all Footprint log are not use [getMetaInfo] and are not showed [Class#Method:Linenumber].
+ * @param forceSimple If it true, all Footprint log are not use [getMetaInfo] and are not showed [Class#Method:Linenumber] (FileName:LineNumber).
  *                    It is used for improve performance. (Default false)
  * @param stacktraceLogLogPriority Set default LogPriority when Footprint printing stacktrace. (Default [LogPriority.ERROR])
  * @param jsonIndentCount Set default count of Json Indention space.
@@ -68,7 +72,7 @@ fun configFootprint(
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber].
+ * Log [ClassName#MethodName:LineNumber] + (links to the line of code).
  *
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
@@ -77,12 +81,18 @@ fun configFootprint(
  */
 fun footprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
-        simpleFootprint(getMetaInfo(), priority = priority, logTag = logTag)
+        val metaInfo = getMetaInfo()
+        val metaInfoText = if (metaInfo == null) {
+            ""
+        } else {
+            "${metaInfo.prefixString()} ${metaInfo.suffixString()}"
+        }
+        simpleFootprint(metaInfoText, priority = priority, logTag = logTag)
     }
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and messages.
+ * Log [ClassName#MethodName:LineNumber] and messages + (links to the line of code).
  *
  * @param messages Messages you want to log.
  *                 This param is vararg, you can put multiple messages with using comma.
@@ -94,12 +104,19 @@ fun footprint(priority: LogPriority = defaultLogPriority, logTag: String = defau
  */
 fun footprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
-        simpleFootprint(getMetaInfo(), messages.joinToString(separator = " "), priority = priority, logTag = logTag)
+        val metaInfo = getMetaInfo()
+        simpleFootprint(
+            metaInfo.prefixString(),
+            messages.joinToString(separator = " "),
+            metaInfo.suffixString(),
+            priority = priority,
+            logTag = logTag
+        )
     }
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and messages.
+ * Log [ClassName#MethodName:LineNumber] and messages + (links to the line of code).
  * Log priority of this log is force [LogPriority.ERROR].
  * The log could become red, so you can find log easier in many debug logs.
  *
@@ -145,7 +162,7 @@ fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPri
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and target as Json.
+ * Log [ClassName#MethodName:LineNumber] and target as Json + (links to the line of code).
  *
  * @param target "Any object" you want to log as Json.
  *               If target Json conversion failed, it show toString().
@@ -154,12 +171,17 @@ fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPri
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
+fun jsonFootprint(
+    target: Any?,
+    indent: Int = defaultJsonIndentCount,
+    priority: LogPriority = defaultLogPriority,
+    logTag: String = defaultLogTag
+) {
     target.withJsonFootprint(indent, priority, logTag)
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and receiver as Json. And return receiver.
+ * Log [ClassName#MethodName:LineNumber] and receiver as Json + (links to the line of code). And return receiver.
  * Want to log primitive value, use [withFootprint].
  * If receiver Json conversion failed, it show toString().
  * Want to know failure reason, use [configFootprint] and "showJsonExceptionInternal = true".
@@ -171,16 +193,18 @@ fun jsonFootprint(target: Any?, indent: Int = defaultJsonIndentCount, priority: 
  * @param block (Optional) Variable which you want to log. Default is "this".
  * @return Receiver (this).
  */
-fun <T> T.withJsonFootprint(indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority,
-                            logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
+fun <T> T.withJsonFootprint(
+    indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority,
+    logTag: String = defaultLogTag, block: (T) -> Any? = { this }
+): T {
     if (enableInternal) {
-        footprint("\n", block(this).toFormattedJSON(indent), priority = priority, logTag = logTag)
+        linkFirstFootprint("\n", block(this).toFormattedJSON(indent), priority = priority, logTag = logTag)
     }
     return this
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and receiver as toString(). And return receiver.
+ * Log [ClassName#MethodName:LineNumber] and receiver as toString() + (links to the line of code). And return receiver.
  * Want to log object json, use [withJsonFootprint].
  *
  * @receiver Object you want to log as toString().
@@ -207,7 +231,11 @@ fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: Stri
  * @param block (Optional) Variable which you want to log as toString(). Default is "this".
  * @return Receiver (this).
  */
-fun <T> T.withSimpleFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
+fun <T> T.withSimpleFootprint(
+    priority: LogPriority = defaultLogPriority,
+    logTag: String = defaultLogTag,
+    block: (T) -> Any? = { this }
+): T {
     if (enableInternal) {
         simpleFootprint(block(this), priority = priority, logTag = logTag)
     }
@@ -215,7 +243,7 @@ fun <T> T.withSimpleFootprint(priority: LogPriority = defaultLogPriority, logTag
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and pair values.
+ * Log [ClassName#MethodName:LineNumber] and pair values + (links to the line of code).
  * Usage: pairFootprint("first" to 1, "second" to "secondValue", "third" to 3.toString())
  * Output: [ClassName#MethodName:LineNumber]
  *         first : 1
@@ -231,11 +259,11 @@ fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defa
     val message = pairs.joinToString(separator = "\n", prefix = "\n") {
         "${it.first} : ${it.second}"
     }
-    footprint(message, priority = priority, logTag = logTag)
+    linkFirstFootprint(message, priority = priority, logTag = logTag)
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and stacktrace of exception.
+ * Log [ClassName#MethodName:LineNumber] and stacktrace of exception + (links to the line of code).
  *
  * @receiver [Throwable] you want to log as stacktrace string.
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
@@ -243,12 +271,12 @@ fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defa
  */
 fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
-        footprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
+        linkFirstFootprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
     }
 }
 
 /**
- * Log [ClassName#MethodName:LineNumber] and current stacktrace.
+ * Log [ClassName#MethodName:LineNumber] and current stacktrace + (links to the line of code).
  * Useful for confirming calling hierarchy.
  *
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
@@ -257,6 +285,29 @@ fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLe
 fun stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(Throwable()), priority = priority, logTag = logTag)
+    }
+}
+
+/**
+ * Log [ClassName#MethodName:LineNumber] (links to the line of code) + messages.
+ * Logcat can only link the line of code on the first line, so use this in [jsonFootprint] and [stacktraceFootprint].
+ *
+ * @param messages (Optional) Messages you want to log.
+ *                 This param is vararg, you can put multiple messages with using comma.
+ *                 Messages are concat at space.
+ * @param priority (Optional) Log priority of this log. Select from [LogPriority].
+ * @param logTag (Optional) Logcat-log's tag of this log.
+ */
+private fun linkFirstFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
+    if (enableInternal) {
+        val metaInfo = getMetaInfo()
+        simpleFootprint(
+            metaInfo.prefixString(),
+            metaInfo.suffixString(),
+            messages.joinToString(separator = " "),
+            priority = priority,
+            logTag = logTag
+        )
     }
 }
 
@@ -288,13 +339,13 @@ private fun Any?.toFormattedJSON(indent: Int): String? {
 
 
 /**
- * Get stacktrace information string from current [StackTraceElement].
+ * Get stacktrace information from current [StackTraceElement].
  *
- * @return [className#methodName:line]
+ * @return [MetaInfo]
  */
-private fun getMetaInfo(): String? {
+private fun getMetaInfo(): MetaInfo? {
     if (forceSimpleInternal) {
-        return ""
+        return null
     }
     // Get stackTraceElement array. // 0: VM, 1: Thread, 2: This method, 3: Caller of this method...
     val elements = Thread.currentThread().stackTrace
@@ -303,19 +354,40 @@ private fun getMetaInfo(): String? {
             return getMetaInfo(elements[i])
         }
     }
-    return "No meta info"
+    return null
 }
 
 /**
- * Get stacktrace information string from [StackTraceElement].
+ * Get stacktrace information from [StackTraceElement].
  *
  * @param element a [StackTraceElement]
- * @return [className#methodName:line]
+ * @return [MetaInfo]
  */
-private fun getMetaInfo(element: StackTraceElement): String? {
+private fun getMetaInfo(element: StackTraceElement): MetaInfo {
     val fullClassName = element.className
+    val fileName = element.fileName
     val simpleClassName = fullClassName?.substring(fullClassName.lastIndexOf(".") + 1)
     val methodName = element.methodName
     val lineNumber = element.lineNumber
-    return "[$simpleClassName#$methodName:$lineNumber]"
+    return MetaInfo(fileName, simpleClassName, methodName, lineNumber)
 }
+
+private data class MetaInfo(
+    private val fileName: String?,
+    private val simpleClassName: String?,
+    private val methodName: String?,
+    private val lineNumber: Int,
+) {
+    companion object {
+        fun MetaInfo?.prefixString(): String {
+            this ?: return ""
+            return "[$simpleClassName#$methodName:$lineNumber]"
+        }
+
+        fun MetaInfo?.suffixString(): String {
+            this ?: return ""
+            return "($fileName:$lineNumber)"
+        }
+    }
+}
+
