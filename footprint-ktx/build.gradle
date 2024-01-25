@@ -19,12 +19,12 @@ android {
         }
     }
     namespace 'com.morayl.footprintktx'
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
+//    publishing {
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
+//    }
 }
 
 dependencies {
@@ -33,22 +33,30 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//
+//                groupId = 'com.morayl'
+//                artifactId = 'footprint-ktx'
+//                version = footprint_version
+//            }
+//        }
+//        repositories {
+//            maven {
+//                name = 'footprint-ktx'
+//                url = "${project.rootDir}/repository"
+//            }
+//        }
+//    }
+//}
 
-                groupId = 'com.morayl'
-                artifactId = 'footprint-ktx'
-                version = footprint_version
-            }
-        }
-        repositories {
-            maven {
-                name = 'footprint-ktx'
-                url = "${project.rootDir}/repository"
-            }
-        }
-    }
+ext {
+    PUBLISH_CENTRAL_GROUP_ID = 'io.github.morayl'
+    PUBLISH_CENTRAL_VERSION = 'footprint_version'
+    PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint-ktx'
 }
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
