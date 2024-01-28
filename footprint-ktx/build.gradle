@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'maven-publish'
+    // TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
+//    id 'maven-publish'
 }
 
 android {
@@ -19,6 +20,7 @@ android {
         }
     }
     namespace 'com.morayl.footprintktx'
+    // TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
 //    publishing {
 //        singleVariant("release") {
 //            withSourcesJar()
@@ -33,6 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
+// TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
 //afterEvaluate {
 //    publishing {
 //        publications {
@@ -55,7 +58,7 @@ dependencies {
 
 ext {
     PUBLISH_CENTRAL_GROUP_ID = 'io.github.morayl'
-    PUBLISH_CENTRAL_VERSION = 'footprint_version'
+    PUBLISH_CENTRAL_VERSION = footprint_version
     PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint-ktx'
 }
 
