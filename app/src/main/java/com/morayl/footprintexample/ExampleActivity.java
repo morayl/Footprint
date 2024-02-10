@@ -3,7 +3,7 @@ package com.morayl.footprintexample;
 import android.os.Bundle;
 import android.view.View;
 
-import com.morayl.footprint.Footprint;
+import com.morayl.footprint.java.Footprint;
 
 import androidx.appcompat.app.AppCompatActivity;
 

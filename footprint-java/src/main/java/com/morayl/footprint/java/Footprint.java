@@ -1,4 +1,4 @@
-package com.morayl.footprint;
+package com.morayl.footprint.java;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,9 +23,6 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * 本Footprintは非推奨になりました。
- * 移行先を用意していますので、詳しくは下記を御覧ください。
- * <a href="https://github.com/morayl/Footprint/blob/master/CHANGELOG_for_java.md">移行手順</a>
  * <p>
  * 足跡を、残す。
  * ログを吐くUtilクラス
@@ -48,7 +45,6 @@ import java.util.Random;
  *
  * Created by morayl on 2015/02/21.
  */
-@Deprecated
 public class Footprint {
     /** デフォルトのタグ */
     private static final String DEFAULT_TAG = "Footprint";

@@ -13,7 +13,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.morayl.footprint'
+    namespace 'com.morayl.footprint.java'
     publishing {
         singleVariant("release") {
             withSourcesJar()
