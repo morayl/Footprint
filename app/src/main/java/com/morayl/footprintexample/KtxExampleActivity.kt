@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.morayl.footprintktx.*
+import com.morayl.footprint.*
 
 /**
  * You can see examples.

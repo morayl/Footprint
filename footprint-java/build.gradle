@@ -27,4 +27,4 @@ ext {
     PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint-java'
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+//apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

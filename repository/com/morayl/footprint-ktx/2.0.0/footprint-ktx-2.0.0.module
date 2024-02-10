@@ -1,0 +1,114 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.morayl",
+    "module": "footprint-ktx",
+    "version": "2.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-2.0.0.aar",
+          "url": "footprint-ktx-2.0.0.aar",
+          "size": 14745,
+          "sha512": "b54405afbf6c7f444b3a1114516d1774b4d74608064238eefb130064d67d752f65cd6383a70c2dcd8122d2d0056f6aa810382cbafdae7893d6ff87331aae09fc",
+          "sha256": "4e2369415f58bf59f22b0a6abe2b6296e07d07e8cab70f271bc2327955bac839",
+          "sha1": "36fccfe81ba5769db291355a872428c8bc2c2a90",
+          "md5": "8b04c0cff32642dc9b9936ccdab06354"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.22"
+          }
+        },
+        {
+          "group": "com.google.code.gson",
+          "module": "gson",
+          "version": {
+            "requires": "2.10.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "footprint-ktx-2.0.0.aar",
+          "url": "footprint-ktx-2.0.0.aar",
+          "size": 14745,
+          "sha512": "b54405afbf6c7f444b3a1114516d1774b4d74608064238eefb130064d67d752f65cd6383a70c2dcd8122d2d0056f6aa810382cbafdae7893d6ff87331aae09fc",
+          "sha256": "4e2369415f58bf59f22b0a6abe2b6296e07d07e8cab70f271bc2327955bac839",
+          "sha1": "36fccfe81ba5769db291355a872428c8bc2c2a90",
+          "md5": "8b04c0cff32642dc9b9936ccdab06354"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-2.0.0-sources.jar",
+          "url": "footprint-ktx-2.0.0-sources.jar",
+          "size": 4918,
+          "sha512": "092c89abbb0ba8c5646369e160e96709186cbf8e60ae7505af4589c072025c89a541687e234cc6188e14da9efda56e8d65e13f6eeddeaa38d453bd342b9c2922",
+          "sha256": "9b5e961a748f174d63ba691f0ca6025914764c9d4be9cebcb5329c178c723757",
+          "sha1": "bdfcf63cdbbd2bc418d5205851af0938280a6af5",
+          "md5": "0b484daabcd4a612f1934b1a2a32d27e"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "footprint-ktx-2.0.0-javadoc.jar",
+          "url": "footprint-ktx-2.0.0-javadoc.jar",
+          "size": 290939,
+          "sha512": "3b69417456f67828e781b1c05a90330ff2e71b4417332b194d204335f8be74266f778362207ea1ab2702b88c79e043e411ca8206d42670cd98613b468d2c1a10",
+          "sha256": "48ea10f3e8543f0c3d502535c5e6de28bf8e23006bcc5e3fc952c4a8fa22c2ae",
+          "sha1": "fcf2967dd6f3c5ad6aefd56791960d0acf2cce68",
+          "md5": "bda094d800f2c75e70ba014ee52d9c1a"
+        }
+      ]
+    }
+  ]
+}

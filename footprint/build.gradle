@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    namespace 'com.morayl.footprint'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+ext {
+    PUBLISH_CENTRAL_GROUP_ID = 'io.github.morayl'
+    PUBLISH_CENTRAL_VERSION = footprint_version
+    PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

@@ -1,9 +1,9 @@
-package com.morayl.footprintktx
+package com.morayl.footprint
 
 import android.util.Log
 import com.google.gson.Gson
-import com.morayl.footprintktx.MetaInfo.Companion.prefixString
-import com.morayl.footprintktx.MetaInfo.Companion.suffixString
+import com.morayl.footprint.MetaInfo.Companion.prefixString
+import com.morayl.footprint.MetaInfo.Companion.suffixString
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
