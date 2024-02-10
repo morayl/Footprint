@@ -1,6 +1,49 @@
 Change Log
 ==========
 
+Version 1.5.0 *(2024-02-10)*
+----------------------------
+
+### **Importance notice**
+The module ID of the Footprint library for java will be changed from `footprint` to `footprint-java`.
+All methods will be deprecated in footprint:1.5.0.
+
+#### **Migration guide**
+Change dependencies and imports.
+1. Delete the repository maven definition for Footprint below.
+```groovy
+repositories {
+    maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
+}
+```
+
+2. (If there is no definition) Add mavenCentral definition for repository.
+```groovy
+repositories {
+    mavenCentral()
+}
+```
+
+3. Change library name.
+```groovy
+// Before
+debugImplementation 'com.morayl:footprint:1.5.0'
+// After(Latest version recommended)
+debugImplementation 'io.github.morayl:footprint-java:1.5.0'
+```
+
+4. Fix imports.
+```java
+// Before
+import com.morayl.footprint.Footprint;
+// After
+import com.morayl.footprint.java.Footprint;
+```
+
+Other updates
+ * Update compile sdk version to 28 -> 33.
+ * Update gson 2.8.1 -> 2.10.1.
+
 Version 1.4.0 *(2019-01-20)*
 ----------------------------
 
