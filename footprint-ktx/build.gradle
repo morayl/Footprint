@@ -1,11 +1,12 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'maven-publish'
+    // TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
+//    id 'maven-publish'
 }
 
 android {
-    compileSdkVersion compile_sdk_version
+    compileSdk compile_sdk_version
 
     defaultConfig {
         minSdkVersion min_sdk_version
@@ -19,36 +20,46 @@ android {
         }
     }
     namespace 'com.morayl.footprintktx'
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
+    // TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
+//    publishing {
+//        singleVariant("release") {
+//            withSourcesJar()
+//            withJavadocJar()
+//        }
+//    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     testImplementation 'junit:junit:4.13.2'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
+// TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//
+//                groupId = 'com.morayl'
+//                artifactId = 'footprint-ktx'
+//                version = footprint_version
+//            }
+//        }
+//        repositories {
+//            maven {
+//                name = 'footprint-ktx'
+//                url = "${project.rootDir}/repository"
+//            }
+//        }
+//    }
+//}
 
-                groupId = 'com.morayl'
-                artifactId = 'footprint-ktx'
-                version = footprint_version
-            }
-        }
-        repositories {
-            maven {
-                name = 'footprint-ktx'
-                url = "${project.rootDir}/repository"
-            }
-        }
-    }
+ext {
+    PUBLISH_CENTRAL_GROUP_ID = 'io.github.morayl'
+    PUBLISH_CENTRAL_VERSION = footprint_version
+    PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint-ktx'
 }
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
