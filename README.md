@@ -19,18 +19,19 @@ Usage
 
  Footprint has more useful functions, log multiple params, json, stacktrace, pair values, etc.
  Please see examples at [KtxExampleActivity.kt](/app/src/main/java/com/morayl/footprintexample/KtxExampleActivity.kt).  
- You can see library methods at [Footprint.kt](/footprint-ktx/src/main/java/com/morayl/footprintktx/Footprint.kt).
+ You can see library methods at [Footprint.kt](/footprint/src/main/java/com/morayl/footprint/Footprint.kt).
 
 Download
 --------
 
 ```groovy
 repositories {
-    maven { url 'https://raw.github.com/morayl/Footprint/master/repository' }
+    mavenCentral()
 }
+
 dependencies {
-    debugImplementation 'com.morayl:footprint-ktx:1.2.0'
-    releaseImplementation 'com.morayl:footprint-ktx-noop:1.2.0'
+    debugImplementation 'io.github.morayl:footprint:2.0.0'
+    releaseImplementation 'io.github.morayl:footprint-noop:2.0.0'
 }
 ```
 This library is suitable for bug investigation or log during development.  
@@ -48,7 +49,7 @@ Old library(Footprint.java)
 ---------------------------
 Footprint.java has stopped development.  
 But you can use. ([Readme](./README_for_java.md) / [ChangeLog](./CHANGELOG_for_java.md)).  
-In Java, you "can" use Footprint-ktx to write FootprintKt.~ but it's not useful.
+In Java, you "can" use Footprint to write FootprintKt.~ but it's not useful.
 
 License
 --------
