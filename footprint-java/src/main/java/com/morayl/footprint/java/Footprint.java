@@ -1,4 +1,4 @@
-package com.morayl.footprint;
+package com.morayl.footprint.java;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,12 +23,13 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
+ * <p>
  * 足跡を、残す。
  * ログを吐くUtilクラス
  * Footprint.leave();と書くだけで、
  * それを書いた場所のクラス名・メソッド名・行数が出力されます。
  * [クラス#メソッド:行数]
- *
+ * <p>
  * ★ひとことメソッド紹介★
  * いちいちLogTagを入れるの面倒ですよね。{@link Footprint}
  * Log.dってキーボードで打ちにくいですよね。{@link #leave()}

@@ -1,0 +1,30 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        minSdkVersion 14
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    namespace 'com.morayl.footprint.java'
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+ext {
+    PUBLISH_CENTRAL_GROUP_ID = 'io.github.morayl'
+    PUBLISH_CENTRAL_VERSION = footprint_java_version
+    PUBLISH_CENTRAL_ARTIFACT_ID = 'footprint-java'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
