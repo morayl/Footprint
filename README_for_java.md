@@ -14,10 +14,10 @@ Download
 
 ```groovy
 repositories {
-    maven { url 'http://raw.github.com/morayl/Footprint/master/repository' }
+    mavenCentral()
 }
 dependencies {
-    debugImplementation 'com.morayl:footprint:1.4.0'
+    debugImplementation 'io.github.morayl:footprint-java:1.5.0'
 }
 ```
 This function is a little bit slow, because using `stack trace`.
@@ -26,12 +26,12 @@ So I recommend you to use only `debugImplementation`
 ChangeLog
 --------
 
- See [ChangeLog](./CHANGELOG.md)
+ See [ChangeLog](./CHANGELOG_for_java.md)
 
 License
 -------
 
-    Copyright 2016 morayl
+    Copyright 2024 morayl
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
