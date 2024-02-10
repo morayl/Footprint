@@ -9,10 +9,6 @@ import org.json.JSONException
 import org.json.JSONObject
 
 /**
- * footprint-ktx has been deprecated.
- * Please see below for the migration.
- * <a href="https://github.com/morayl/Footprint/blob/master/CHANGELOG.md">Migration</a>
- *
  * Leave footprint.
  * Footprint-ktx is a library for debugging Android-Kotlin.
  *
@@ -57,7 +53,6 @@ private var defaultJsonIndentCount = 4
  *
  * @see [LogPriority]
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun configFootprint(
         enable: Boolean = enableInternal,
         logTag: String = defaultLogTag,
@@ -84,7 +79,6 @@ fun configFootprint(
  *
  * @see [LogPriority]
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun footprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         val metaInfo = getMetaInfo()
@@ -108,7 +102,6 @@ fun footprint(priority: LogPriority = defaultLogPriority, logTag: String = defau
  *
  * @see [LogPriority]
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun footprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         val metaInfo = getMetaInfo()
@@ -132,7 +125,6 @@ fun footprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority,
  *                 Messages are concat at space.
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = defaultLogTag) {
     footprint(*messages, priority = LogPriority.ERROR, logTag = logTag)
 }
@@ -146,7 +138,6 @@ fun accentFootprint(vararg messages: Any? = emptyArray(), logTag: String = defau
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun simpleFootprint(message: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         Log.println(priority.value, logTag, message.toString())
@@ -164,7 +155,6 @@ fun simpleFootprint(message: Any?, priority: LogPriority = defaultLogPriority, l
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     if (enableInternal) {
         simpleFootprint(messages.joinToString(separator = " "), priority = priority, logTag = logTag)
@@ -181,7 +171,6 @@ fun simpleFootprint(vararg messages: Any?, priority: LogPriority = defaultLogPri
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun jsonFootprint(
     target: Any?,
     indent: Int = defaultJsonIndentCount,
@@ -204,7 +193,6 @@ fun jsonFootprint(
  * @param block (Optional) Variable which you want to log. Default is "this".
  * @return Receiver (this).
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun <T> T.withJsonFootprint(
     indent: Int = defaultJsonIndentCount, priority: LogPriority = defaultLogPriority,
     logTag: String = defaultLogTag, block: (T) -> Any? = { this }
@@ -225,7 +213,6 @@ fun <T> T.withJsonFootprint(
  * @param block (Optional) Variable which you want to log as toString(). Default is "this".
  * @return Receiver (this).
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag, block: (T) -> Any? = { this }): T {
     if (enableInternal) {
         footprint(block(this), priority = priority, logTag = logTag)
@@ -244,7 +231,6 @@ fun <T> T.withFootprint(priority: LogPriority = defaultLogPriority, logTag: Stri
  * @param block (Optional) Variable which you want to log as toString(). Default is "this".
  * @return Receiver (this).
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun <T> T.withSimpleFootprint(
     priority: LogPriority = defaultLogPriority,
     logTag: String = defaultLogTag,
@@ -269,7 +255,6 @@ fun <T> T.withSimpleFootprint(
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defaultLogPriority, logTag: String = defaultLogTag) {
     val message = pairs.joinToString(separator = "\n", prefix = "\n") {
         "${it.first} : ${it.second}"
@@ -284,7 +269,6 @@ fun pairFootprint(vararg pairs: Pair<String, Any?>, priority: LogPriority = defa
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
         linkFirstFootprint(Log.getStackTraceString(this), priority = priority, logTag = logTag)
@@ -298,7 +282,6 @@ fun Throwable.stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLe
  * @param priority (Optional) Log priority of this log. Select from [LogPriority].
  * @param logTag (Optional) Logcat-log's tag of this log.
  */
-@Deprecated(message = "footprint-ktx has been deprecated. Please see github for the migration. https://github.com/morayl/Footprint/blob/master/CHANGELOG.md ")
 fun stacktraceFootprint(priority: LogPriority = defaultStackTraceLogLevel, logTag: String = defaultLogTag) {
     if (enableInternal) {
         footprint(Log.getStackTraceString(Throwable()), priority = priority, logTag = logTag)
