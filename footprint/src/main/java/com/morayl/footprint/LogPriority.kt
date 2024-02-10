@@ -1,4 +1,4 @@
-package com.morayl.footprintktx
+package com.morayl.footprint
 
 import android.util.Log
 

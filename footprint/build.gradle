@@ -19,7 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.morayl.footprintktx'
+    namespace 'com.morayl.footprint'
     // TODO Github向けのaarを作る際には有効にする 2.0.0リリース後に削除
     publishing {
         singleVariant("release") {
